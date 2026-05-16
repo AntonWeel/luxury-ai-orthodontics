@@ -311,19 +311,12 @@ export default function Index() {
                 ))}
               </div>
 
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleInputChange}
-              />
               <button
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => window.open("https://forms.gle/FxaYuWWicXGSo4iw6", "_blank")}
                 className="btn-purple px-7 py-3.5 text-sm flex items-center gap-2 mb-6"
               >
-                Upload Your Photo
-                <Icon name="Upload" size={16} />
+                Start Free Preview
+                <Icon name="ArrowRight" size={16} />
               </button>
 
               <div className="flex items-center gap-3">
@@ -336,35 +329,31 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Right - Upload zone or Before/After slider */}
+            {/* Right - Google Form CTA */}
             <div className="flex flex-col gap-4">
-
-              {/* Upload drop zone */}
-              {!uploadedPhoto && !analyzing && !analysisDone && (
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                  onDragLeave={() => setDragOver(false)}
-                  onDrop={handleDrop}
-                  className={`relative rounded-2xl border-2 border-dashed cursor-pointer transition-all flex flex-col items-center justify-center gap-4 aspect-[4/5] ${dragOver ? "border-purple-500 bg-purple-50" : "border-gray-300 bg-gray-50 hover:border-purple-400 hover:bg-purple-50/50"}`}
+              <div
+                  onClick={() => window.open("https://forms.gle/FxaYuWWicXGSo4iw6", "_blank")}
+                  className="relative rounded-2xl border-2 border-dashed border-purple-200 bg-purple-50 hover:border-purple-400 hover:bg-purple-100/60 cursor-pointer transition-all flex flex-col items-center justify-center gap-4 aspect-[4/5]"
                 >
-                  <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center">
-                    <Icon name="ImagePlus" size={28} className="text-purple-500" />
+                  <div className="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center shadow-lg">
+                    <Icon name="ClipboardList" size={28} className="text-white" />
                   </div>
                   <div className="text-center px-6">
-                    <p className="font-bold text-gray-800 mb-1">Drop your photo here</p>
-                    <p className="text-sm text-gray-500">or click to browse</p>
-                    <p className="text-xs text-gray-400 mt-2">JPG, PNG, WEBP · max 10MB</p>
+                    <p className="font-bold text-gray-900 mb-1">Get Your Free AI Smile Preview</p>
+                    <p className="text-sm text-gray-500">Fill out a short form and our expert will prepare your personalized smile plan</p>
                   </div>
-                  <div className="flex gap-3 text-xs text-gray-400">
+                  <div className="btn-purple px-6 py-2.5 text-sm flex items-center gap-2">
+                    Open Form
+                    <Icon name="ExternalLink" size={14} />
+                  </div>
+                  <div className="flex gap-4 text-xs text-gray-400">
                     <span className="flex items-center gap-1"><Icon name="Lock" size={11} /> Private</span>
                     <span className="flex items-center gap-1"><Icon name="Zap" size={11} /> 30 sec</span>
                     <span className="flex items-center gap-1"><Icon name="Sparkles" size={11} /> AI-powered</span>
                   </div>
-                </div>
-              )}
+              </div>
 
-              {/* Analyzing state */}
+              {/* Analyzing state - hidden, unused */}
               {analyzing && (
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] bg-gray-900 flex flex-col items-center justify-center gap-6">
                   <img src={uploadedPhoto!} alt="Uploaded" className="absolute inset-0 w-full h-full object-cover opacity-30" />
