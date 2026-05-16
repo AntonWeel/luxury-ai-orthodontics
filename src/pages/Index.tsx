@@ -4,12 +4,16 @@ import Icon from "@/components/ui/icon";
 const BEFORE_AFTER_IMG = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/9553bf85-ffd0-4d15-ba67-ea474e306a50.jpg";
 const DOCTOR_M = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/f5200402-c835-4fbf-8322-94ab6108caca.jpg";
 const DOCTOR_F = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/05b8bcf4-f9e0-471a-93fb-a37318fcef13.jpg";
+const DOCTOR_ME = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/028486af-88ac-40d0-be8c-209ddd293bab.jpg";
+const DOCTOR_AS = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/980b2f78-5cca-44e2-980f-eb9c8803adbd.jpg";
+const DOCTOR_EU = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/38cda105-edc9-411f-a72a-d266c026a714.jpg";
+const DOCTOR_AF = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/9a4e596b-f193-4582-b75a-6e1eb2f70591.jpg";
 
 const doctors = [
-  { name: "Dr. Himanshu Sethi", title: "Orthodontist", exp: "12+ Years Exp.", rating: 4.9, reviews: "1.2k", img: DOCTOR_M },
-  { name: "Dr. Priya Sharma", title: "Orthodontist", exp: "10+ Years Exp.", rating: 4.8, reviews: "980", img: DOCTOR_F },
-  { name: "Dr. Arjun Patel", title: "Orthodontist", exp: "11+ Years Exp.", rating: 4.9, reviews: "1.1k", img: DOCTOR_M },
-  { name: "Dr. Neha Kapoor", title: "Orthodontist", exp: "9+ Years Exp.", rating: 4.8, reviews: "870", img: DOCTOR_F },
+  { name: "Dr. Khalid Al-Rashid", title: "Orthodontist", exp: "14+ Years Exp.", rating: 4.9, reviews: "1.4k", img: DOCTOR_ME },
+  { name: "Dr. Mei Lin Chen", title: "Orthodontist", exp: "10+ Years Exp.", rating: 4.8, reviews: "1.1k", img: DOCTOR_AS },
+  { name: "Dr. James Fletcher", title: "Orthodontist", exp: "16+ Years Exp.", rating: 4.9, reviews: "2.0k", img: DOCTOR_EU },
+  { name: "Dr. Amara Osei", title: "Orthodontist", exp: "11+ Years Exp.", rating: 4.8, reviews: "870", img: DOCTOR_AF },
 ];
 
 const reviews = [
@@ -114,16 +118,16 @@ export default function Index() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 hero-bg border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-white border-b border-gray-100 shadow-sm">
         <div className="flex items-center gap-1">
-          <span className="text-white font-bold text-xl tracking-tight">SmileAI</span>
-          <span className="text-purple-400 text-lg">✦</span>
+          <span className="text-gray-900 font-bold text-xl tracking-tight">SmileAI</span>
+          <span className="text-purple-500 text-lg">✦</span>
         </div>
         <div className="hidden md:flex items-center gap-8">
           {["Home", "Services", "How it works", "About us", "For Doctors"].map((item) => (
             <button
               key={item}
-              className="text-white/80 hover:text-white text-sm transition-colors font-medium"
+              className="text-gray-600 hover:text-purple-600 text-sm transition-colors font-medium"
             >
               {item}
             </button>
@@ -139,22 +143,26 @@ export default function Index() {
       </nav>
 
       {/* HERO */}
-      <section id="home" className="hero-bg min-h-screen flex items-center pt-16 px-8 relative">
-        <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+      <section id="home" className="min-h-screen flex items-center pt-16 px-8 relative bg-gradient-to-br from-purple-50 via-white to-indigo-50 overflow-hidden">
+        {/* Decorative blobs */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-100/60 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-indigo-100/50 blur-3xl pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
 
           {/* Left */}
-          <div className="text-white animate-fade-up">
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6">
-              <span className="text-yellow-400 text-xs">🤖</span>
-              <span className="text-white/90 text-xs font-semibold tracking-widest uppercase">AI Powered Orthodontics</span>
+          <div className="animate-fade-up">
+            <div className="inline-flex items-center gap-2 bg-purple-100 border border-purple-200 rounded-full px-4 py-1.5 mb-6">
+              <span className="text-yellow-500 text-xs">🤖</span>
+              <span className="text-purple-700 text-xs font-semibold tracking-widest uppercase">AI Powered Orthodontics</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4">
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-gray-900">
               See Your Future<br />
               <span className="text-gradient">Smile</span> with AI
             </h1>
 
-            <p className="text-white/70 text-lg mb-8 max-w-md leading-relaxed">
+            <p className="text-gray-500 text-lg mb-8 max-w-md leading-relaxed">
               Upload your photo and get an AI-powered preview of your perfect smile in less than 30 seconds.
             </p>
 
@@ -163,12 +171,12 @@ export default function Index() {
               className="btn-purple animate-pulse-glow px-8 py-4 text-base flex items-center gap-3 mb-8"
             >
               Start Free Preview
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
                 <Icon name="ArrowRight" size={16} />
               </div>
             </button>
 
-            <div className="flex items-center gap-6 text-white/60 text-sm">
+            <div className="flex items-center gap-6 text-gray-400 text-sm">
               <div className="flex items-center gap-1.5">
                 <Icon name="CreditCard" size={14} />
                 <span>No credit card</span>
