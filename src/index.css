@@ -4,40 +4,35 @@
 
 @layer base {
   :root {
-    --background: 220 20% 6%;
-    --foreground: 210 20% 95%;
+    --background: 0 0% 98%;
+    --foreground: 240 15% 12%;
 
-    --card: 220 18% 9%;
-    --card-foreground: 210 20% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 15% 12%;
 
-    --popover: 220 18% 9%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 15% 12%;
 
-    --primary: 174 80% 55%;
-    --primary-foreground: 220 20% 6%;
+    --primary: 258 84% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 14%;
-    --secondary-foreground: 210 20% 85%;
+    --secondary: 258 30% 96%;
+    --secondary-foreground: 258 40% 30%;
 
-    --muted: 220 15% 14%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 240 10% 95%;
+    --muted-foreground: 240 10% 50%;
 
-    --accent: 174 80% 55%;
-    --accent-foreground: 220 20% 6%;
+    --accent: 258 84% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 15% 16%;
-    --input: 220 15% 14%;
-    --ring: 174 80% 55%;
+    --border: 240 10% 90%;
+    --input: 240 10% 93%;
+    --ring: 258 84% 60%;
 
     --radius: 0.75rem;
-
-    --teal: 174 80% 55%;
-    --teal-dim: 174 60% 35%;
-    --pearl: 210 30% 92%;
-    --gold: 43 85% 65%;
   }
 }
 
@@ -48,7 +43,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "Inter", "IBM Plex Sans", sans-serif;
   }
 
   html {
@@ -56,35 +51,36 @@
   }
 }
 
-.font-display {
-  font-family: "Cormorant Garamond", serif;
-}
-
-.font-body {
-  font-family: "IBM Plex Sans", sans-serif;
-}
-
-/* Gradient mesh background */
+/* Hero gradient - deep purple */
 .hero-bg {
-  background:
-    radial-gradient(
-      ellipse 80% 60% at 20% 20%,
-      hsla(174, 80%, 35%, 0.15) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 60% 50% at 80% 80%,
-      hsla(220, 80%, 30%, 0.2) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 100% 80% at 50% 50%,
-      hsl(220, 20%, 6%) 0%,
-      hsl(220, 20%, 4%) 100%
-    );
+  background: linear-gradient(
+    135deg,
+    #1a0533 0%,
+    #2d1060 40%,
+    #1e0a4a 70%,
+    #0d0520 100%
+  );
+  position: relative;
+  overflow: hidden;
 }
 
-/* Slider for before/after */
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    hsla(258, 84%, 60%, 0.2) 0%,
+    transparent 70%
+  );
+  top: -100px;
+  right: -100px;
+  pointer-events: none;
+}
+
+/* Slider */
 .smile-slider {
   -webkit-appearance: none;
   appearance: none;
@@ -97,34 +93,23 @@
   -webkit-appearance: none;
   height: 40px;
   width: 4px;
-  background: hsl(var(--teal));
+  background: white;
   border-radius: 2px;
   cursor: ew-resize;
-  box-shadow: 0 0 0 6px hsla(174, 80%, 55%, 0.2);
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);
 }
 
 .smile-slider::-moz-range-thumb {
   height: 40px;
   width: 4px;
-  background: hsl(var(--teal));
+  background: white;
   border-radius: 2px;
   cursor: ew-resize;
-  box-shadow: 0 0 0 6px hsla(174, 80%, 55%, 0.2);
 }
 
-/* Glow effect */
-.glow-teal {
-  box-shadow:
-    0 0 40px hsla(174, 80%, 55%, 0.2),
-    0 0 80px hsla(174, 80%, 55%, 0.08);
-}
-
+/* Text gradient purple */
 .text-gradient {
-  background: linear-gradient(
-    135deg,
-    hsl(var(--teal)) 0%,
-    hsl(var(--pearl)) 100%
-  );
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -134,7 +119,7 @@
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -142,82 +127,71 @@
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(3deg);
   }
-  to {
-    opacity: 1;
+  50% {
+    transform: translateY(-14px) rotate(3deg);
   }
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 20px hsla(174, 80%, 55%, 0.3);
+    box-shadow: 0 4px 24px hsla(258, 84%, 60%, 0.5);
   }
   50% {
-    box-shadow: 0 0 40px hsla(174, 80%, 55%, 0.6);
-  }
-}
-
-@keyframes scan {
-  0% {
-    top: 0%;
-  }
-  100% {
-    top: 100%;
+    box-shadow: 0 4px 48px hsla(258, 84%, 60%, 0.9);
   }
 }
 
 .animate-fade-up {
-  animation: fadeUp 0.8s ease-out forwards;
+  animation: fadeUp 0.7s ease-out forwards;
 }
-
 .animate-fade-up-delay-1 {
-  animation: fadeUp 0.8s ease-out 0.15s forwards;
+  animation: fadeUp 0.7s ease-out 0.1s forwards;
   opacity: 0;
 }
-
 .animate-fade-up-delay-2 {
-  animation: fadeUp 0.8s ease-out 0.3s forwards;
+  animation: fadeUp 0.7s ease-out 0.2s forwards;
   opacity: 0;
 }
-
 .animate-fade-up-delay-3 {
-  animation: fadeUp 0.8s ease-out 0.45s forwards;
+  animation: fadeUp 0.7s ease-out 0.35s forwards;
   opacity: 0;
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
-
-.animate-scan {
-  animation: scan 2s linear infinite;
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
 }
 
 /* Card hover */
 .card-hover {
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
-
 .card-hover:hover {
   transform: translateY(-4px);
-  border-color: hsla(174, 80%, 55%, 0.4);
-  box-shadow: 0 20px 60px hsla(174, 80%, 55%, 0.1);
+  box-shadow: 0 16px 48px hsla(258, 84%, 60%, 0.13);
 }
 
-/* Noise overlay */
-.noise-overlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.4;
-  z-index: 1;
+/* Purple CTA button */
+.btn-purple {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  color: white;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.btn-purple:hover {
+  opacity: 0.92;
+  transform: scale(1.02);
 }
