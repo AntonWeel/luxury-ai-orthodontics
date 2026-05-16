@@ -67,6 +67,8 @@ export default function Index() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const GOOGLE_FORM_URL = "https://forms.google.com/your-form-link";
+
   const runAnalysis = useCallback((photoUrl: string) => {
     setUploadedPhoto(photoUrl);
     setAnalyzing(true);
@@ -78,6 +80,7 @@ export default function Index() {
           clearInterval(interval);
           setAnalyzing(false);
           setAnalysisDone(true);
+          window.open(GOOGLE_FORM_URL, "_blank");
           return 100;
         }
         return p + 4;
@@ -319,8 +322,8 @@ export default function Index() {
                 onClick={() => fileInputRef.current?.click()}
                 className="btn-purple px-7 py-3.5 text-sm flex items-center gap-2 mb-6"
               >
-                Загрузить Ваш рентген
-                <Icon name="ScanLine" size={16} />
+                Upload Your Photo
+                <Icon name="Upload" size={16} />
               </button>
 
               <div className="flex items-center gap-3">
@@ -346,17 +349,17 @@ export default function Index() {
                   className={`relative rounded-2xl border-2 border-dashed cursor-pointer transition-all flex flex-col items-center justify-center gap-4 aspect-[4/5] ${dragOver ? "border-purple-500 bg-purple-50" : "border-gray-300 bg-gray-50 hover:border-purple-400 hover:bg-purple-50/50"}`}
                 >
                   <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center">
-                    <Icon name="ScanLine" size={28} className="text-purple-500" />
+                    <Icon name="ImagePlus" size={28} className="text-purple-500" />
                   </div>
                   <div className="text-center px-6">
-                    <p className="font-bold text-gray-800 mb-1">Перетащите рентген сюда</p>
-                    <p className="text-sm text-gray-500">или нажмите для выбора файла</p>
-                    <p className="text-xs text-gray-400 mt-2">JPG, PNG, DICOM · макс. 10МБ</p>
+                    <p className="font-bold text-gray-800 mb-1">Drop your photo here</p>
+                    <p className="text-sm text-gray-500">or click to browse</p>
+                    <p className="text-xs text-gray-400 mt-2">JPG, PNG, WEBP · max 10MB</p>
                   </div>
                   <div className="flex gap-3 text-xs text-gray-400">
-                    <span className="flex items-center gap-1"><Icon name="Lock" size={11} /> Конфиденциально</span>
-                    <span className="flex items-center gap-1"><Icon name="Zap" size={11} /> 30 сек</span>
-                    <span className="flex items-center gap-1"><Icon name="Sparkles" size={11} /> AI-анализ</span>
+                    <span className="flex items-center gap-1"><Icon name="Lock" size={11} /> Private</span>
+                    <span className="flex items-center gap-1"><Icon name="Zap" size={11} /> 30 sec</span>
+                    <span className="flex items-center gap-1"><Icon name="Sparkles" size={11} /> AI-powered</span>
                   </div>
                 </div>
               )}
@@ -390,69 +393,38 @@ export default function Index() {
               {/* Result state */}
               {analysisDone && uploadedPhoto && (
                 <div className="flex flex-col gap-4">
-                  {/* Before/After comparison */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5]" ref={sliderRef}>
-                    <img src={BEFORE_AFTER_IMG} alt="AI Preview" className="absolute inset-0 w-full h-full object-cover" />
-
-                    <div
-                      className="absolute inset-0 overflow-hidden"
-                      style={{ clipPath: `inset(0 ${100 - sliderValue}% 0 0)` }}
-                    >
-                      <img src={uploadedPhoto} alt="Your photo" className="absolute inset-0 w-full h-full object-cover" />
-                    </div>
-
-                    <input
-                      type="range" min={0} max={100} value={sliderValue}
-                      onChange={(e) => setSliderValue(Number(e.target.value))}
-                      className="smile-slider absolute inset-0 w-full h-full opacity-0 z-20 cursor-ew-resize"
-                    />
-
-                    <div
-                      className="absolute top-0 bottom-0 w-0.5 bg-white z-10 pointer-events-none"
-                      style={{ left: `${sliderValue}%` }}
-                    >
-                      <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-white shadow-lg flex items-center justify-center">
-                        <Icon name="ChevronsLeftRight" size={16} className="text-gray-600" />
+                  {/* Uploaded photo preview */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-xl aspect-[4/5]">
+                    <img src={uploadedPhoto!} alt="Your photo" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 text-center">
+                      <div className="inline-flex items-center gap-2 bg-green-500 text-white text-xs font-bold px-4 py-1.5 rounded-full">
+                        <Icon name="CheckCircle" size={13} />
+                        Photo received!
                       </div>
                     </div>
-
-                    <div className="absolute bottom-4 left-4 bg-black/60 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Your Photo</div>
-                    <div className="absolute bottom-4 right-4 bg-purple-600/90 text-white text-xs font-bold px-3 py-1 rounded-full z-10">AI Preview</div>
                   </div>
 
-                  {/* AI Results card */}
-                  <div className="bg-gradient-to-br from-purple-50 to-white border border-purple-100 rounded-2xl p-5">
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center">
-                        <Icon name="Sparkles" size={13} className="text-white" />
-                      </div>
-                      <span className="font-bold text-purple-700 text-sm uppercase tracking-wider">AI Analysis Result</span>
+                  {/* CTA card */}
+                  <div className="bg-gradient-to-br from-purple-50 to-white border border-purple-100 rounded-2xl p-5 text-center">
+                    <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-3">
+                      <Icon name="ClipboardList" size={22} className="text-purple-600" />
                     </div>
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      {[
-                        { label: "Alignment", value: "Moderate", color: "text-yellow-600", bg: "bg-yellow-50" },
-                        { label: "Treatment Time", value: "12–16 mo.", color: "text-purple-700", bg: "bg-purple-50" },
-                        { label: "Smile Score", value: "7.4 / 10", color: "text-blue-600", bg: "bg-blue-50" },
-                        { label: "Recommendation", value: "Aligners", color: "text-green-600", bg: "bg-green-50" },
-                      ].map((item) => (
-                        <div key={item.label} className={`${item.bg} rounded-xl p-3`}>
-                          <div className="text-gray-500 text-xs mb-1">{item.label}</div>
-                          <div className={`font-bold text-sm ${item.color}`}>{item.value}</div>
-                        </div>
-                      ))}
-                    </div>
+                    <h3 className="font-bold text-gray-900 mb-1">One last step!</h3>
+                    <p className="text-gray-500 text-sm mb-4">Fill out a short form so our expert can prepare your personalized smile plan.</p>
                     <div className="flex gap-2">
                       <button
-                        onClick={() => scrollTo("doctors")}
-                        className="flex-1 btn-purple py-2.5 text-sm text-center"
+                        onClick={() => window.open(GOOGLE_FORM_URL, "_blank")}
+                        className="flex-1 btn-purple py-3 text-sm flex items-center justify-center gap-2"
                       >
-                        Book Consultation
+                        Fill out the form
+                        <Icon name="ExternalLink" size={14} />
                       </button>
                       <button
                         onClick={resetUpload}
-                        className="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-full text-sm hover:bg-gray-50 transition-colors"
+                        className="px-4 py-3 border border-gray-200 text-gray-500 rounded-full text-sm hover:bg-gray-50 transition-colors"
                       >
-                        Try Again
+                        <Icon name="RotateCcw" size={15} />
                       </button>
                     </div>
                   </div>
