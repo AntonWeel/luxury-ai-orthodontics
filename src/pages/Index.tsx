@@ -319,8 +319,8 @@ export default function Index() {
                 onClick={() => fileInputRef.current?.click()}
                 className="btn-purple px-7 py-3.5 text-sm flex items-center gap-2 mb-6"
               >
-                Upload Your Photo
-                <Icon name="Upload" size={16} />
+                Загрузить Ваш рентген
+                <Icon name="ScanLine" size={16} />
               </button>
 
               <div className="flex items-center gap-3">
@@ -346,17 +346,17 @@ export default function Index() {
                   className={`relative rounded-2xl border-2 border-dashed cursor-pointer transition-all flex flex-col items-center justify-center gap-4 aspect-[4/5] ${dragOver ? "border-purple-500 bg-purple-50" : "border-gray-300 bg-gray-50 hover:border-purple-400 hover:bg-purple-50/50"}`}
                 >
                   <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center">
-                    <Icon name="ImagePlus" size={28} className="text-purple-500" />
+                    <Icon name="ScanLine" size={28} className="text-purple-500" />
                   </div>
                   <div className="text-center px-6">
-                    <p className="font-bold text-gray-800 mb-1">Drop your photo here</p>
-                    <p className="text-sm text-gray-500">or click to browse</p>
-                    <p className="text-xs text-gray-400 mt-2">JPG, PNG, WEBP · max 10MB</p>
+                    <p className="font-bold text-gray-800 mb-1">Перетащите рентген сюда</p>
+                    <p className="text-sm text-gray-500">или нажмите для выбора файла</p>
+                    <p className="text-xs text-gray-400 mt-2">JPG, PNG, DICOM · макс. 10МБ</p>
                   </div>
                   <div className="flex gap-3 text-xs text-gray-400">
-                    <span className="flex items-center gap-1"><Icon name="Lock" size={11} /> Private</span>
-                    <span className="flex items-center gap-1"><Icon name="Zap" size={11} /> 30 sec</span>
-                    <span className="flex items-center gap-1"><Icon name="Sparkles" size={11} /> AI-powered</span>
+                    <span className="flex items-center gap-1"><Icon name="Lock" size={11} /> Конфиденциально</span>
+                    <span className="flex items-center gap-1"><Icon name="Zap" size={11} /> 30 сек</span>
+                    <span className="flex items-center gap-1"><Icon name="Sparkles" size={11} /> AI-анализ</span>
                   </div>
                 </div>
               )}
@@ -372,8 +372,8 @@ export default function Index() {
 
                   <div className="relative z-10 text-center px-8">
                     <div className="w-16 h-16 rounded-full border-4 border-purple-500 border-t-transparent animate-spin mx-auto mb-4" />
-                    <p className="text-white font-bold text-lg mb-1">Analyzing your smile...</p>
-                    <p className="text-white/60 text-sm mb-4">AI is scanning tooth alignment & bite</p>
+                    <p className="text-white font-bold text-lg mb-1">Анализируем рентген...</p>
+                    <p className="text-white/60 text-sm mb-4">AI сканирует прикус и положение зубов</p>
 
                     {/* Progress bar */}
                     <div className="w-48 h-2 bg-white/20 rounded-full overflow-hidden mx-auto">
