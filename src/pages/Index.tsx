@@ -5,53 +5,53 @@ const DOCTOR_IMG = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6ee
 
 const doctors = [
   {
-    name: "Елена Соколова",
-    title: "Главный ортодонт",
-    experience: "18 лет",
-    specialty: "Элайнеры, брекеты, хирургическая ортодонтия",
+    name: "Elena Sokolova",
+    title: "Chief Orthodontist",
+    experience: "18 years",
+    specialty: "Aligners, braces, surgical orthodontics",
     rating: 4.9,
     reviews: 312,
     img: DOCTOR_IMG,
-    badge: "Топ специалист",
+    badge: "Top Specialist",
   },
   {
-    name: "Артём Волков",
-    title: "Детский ортодонт",
-    experience: "12 лет",
-    specialty: "Детская ортодонтия, трейнеры, пластинки",
+    name: "Artem Volkov",
+    title: "Pediatric Orthodontist",
+    experience: "12 years",
+    specialty: "Pediatric orthodontics, trainers, retainers",
     rating: 4.8,
     reviews: 241,
     img: DOCTOR_IMG,
-    badge: "Детский эксперт",
+    badge: "Kids Expert",
   },
   {
-    name: "Мария Иванова",
-    title: "AI-ортодонт",
-    experience: "9 лет",
-    specialty: "3D планирование, цифровая ортодонтия",
+    name: "Maria Ivanova",
+    title: "AI Orthodontist",
+    experience: "9 years",
+    specialty: "3D treatment planning, digital orthodontics",
     rating: 5.0,
     reviews: 189,
     img: DOCTOR_IMG,
-    badge: "AI специалист",
+    badge: "AI Specialist",
   },
 ];
 
 const services = [
-  { icon: "Sparkles", label: "AI анализ улыбки", desc: "Загрузи фото — получи 3D-план за 60 секунд" },
-  { icon: "Scan", label: "3D визуализация", desc: "Увидь результат до начала лечения" },
-  { icon: "Star", label: "Элайнеры", desc: "Невидимые каппы от ведущих брендов" },
-  { icon: "Shield", label: "Гарантия результата", desc: "Фиксированная цена, без доплат" },
+  { icon: "Sparkles", label: "AI Smile Analysis", desc: "Upload a photo — get a 3D plan in 60 seconds" },
+  { icon: "Scan", label: "3D Visualization", desc: "See your result before treatment begins" },
+  { icon: "Star", label: "Clear Aligners", desc: "Invisible aligners from top brands" },
+  { icon: "Shield", label: "Result Guarantee", desc: "Fixed price, no hidden fees" },
 ];
 
 const timeSlots = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:30", "16:00", "17:00"];
 
 const weekDays = [
-  { day: "Пн", date: 19 },
-  { day: "Вт", date: 20 },
-  { day: "Ср", date: 21 },
-  { day: "Чт", date: 22 },
-  { day: "Пт", date: 23 },
-  { day: "Сб", date: 24 },
+  { day: "Mon", date: 19 },
+  { day: "Tue", date: 20 },
+  { day: "Wed", date: 21 },
+  { day: "Thu", date: 22 },
+  { day: "Fri", date: 23 },
+  { day: "Sat", date: 24 },
 ];
 
 export default function Index() {
@@ -96,10 +96,10 @@ export default function Index() {
         </div>
         <div className="hidden md:flex items-center gap-6">
           {[
-            { id: "home", label: "Главная" },
-            { id: "transform", label: "AI Анализ" },
-            { id: "doctors", label: "Ортодонты" },
-            { id: "booking", label: "Запись" },
+            { id: "home", label: "Home" },
+            { id: "transform", label: "AI Analysis" },
+            { id: "doctors", label: "Orthodontists" },
+            { id: "booking", label: "Book Now" },
           ].map((item) => (
             <button
               key={item.id}
@@ -116,7 +116,7 @@ export default function Index() {
           onClick={() => scrollTo("booking")}
           className="bg-primary text-primary-foreground text-sm font-medium px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
         >
-          Записаться
+          Book Appointment
         </button>
       </nav>
 
@@ -132,12 +132,12 @@ export default function Index() {
           </div>
 
           <h1 className="font-display text-5xl md:text-7xl font-light text-foreground mb-4 leading-tight animate-fade-up">
-            Улыбка мечты
-            <span className="block text-gradient font-medium italic">через 60 секунд анализа</span>
+            Your Dream Smile
+            <span className="block text-gradient font-medium italic">analyzed in 60 seconds</span>
           </h1>
 
           <p className="font-body text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 animate-fade-up-delay-1">
-            Загрузи фото — наш AI покажет финальный результат лечения ещё до начала. Ведущие ортодонты, 3D-планирование, гарантия результата.
+            Upload a photo — our AI shows you the final result before treatment even begins. Top orthodontists, 3D planning, guaranteed outcome.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up-delay-2">
@@ -145,21 +145,21 @@ export default function Index() {
               onClick={() => scrollTo("transform")}
               className="bg-primary text-primary-foreground font-body font-medium px-8 py-4 rounded-full hover:bg-primary/90 transition-all hover:scale-105 animate-pulse-glow text-base"
             >
-              Запустить AI анализ
+              Run AI Analysis
             </button>
             <button
               onClick={() => scrollTo("doctors")}
               className="border border-border text-foreground font-body font-medium px-8 py-4 rounded-full hover:border-primary/40 transition-all text-base"
             >
-              Наши ортодонты →
+              Our Orthodontists →
             </button>
           </div>
 
           <div className="flex items-center justify-center gap-8 mt-16 animate-fade-up-delay-3">
             {[
-              { num: "2 400+", label: "пациентов" },
-              { num: "98%", label: "довольных результатом" },
-              { num: "3D", label: "визуализация" },
+              { num: "2,400+", label: "patients" },
+              { num: "98%", label: "satisfaction rate" },
+              { num: "3D", label: "visualization" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="font-display text-3xl font-semibold text-primary">{stat.num}</div>
@@ -170,7 +170,7 @@ export default function Index() {
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-xs text-muted-foreground font-body">прокрути вниз</span>
+          <span className="text-xs text-muted-foreground font-body">scroll down</span>
           <Icon name="ChevronDown" size={16} className="text-muted-foreground" />
         </div>
       </section>
@@ -199,14 +199,14 @@ export default function Index() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
               <Icon name="Cpu" size={12} className="text-primary" />
-              <span className="text-xs font-body text-primary tracking-widest uppercase">AI Визуализация</span>
+              <span className="text-xs font-body text-primary tracking-widest uppercase">AI Visualization</span>
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-light text-foreground mb-3">
-              3D трансформация улыбки
-              <span className="block text-gradient italic font-medium">в реальном времени</span>
+              3D Smile Transformation
+              <span className="block text-gradient italic font-medium">in real time</span>
             </h2>
             <p className="font-body text-muted-foreground max-w-xl mx-auto">
-              Перетащи ползунок и увидь разницу. Наш AI анализирует прикус, положение зубов и строит точный прогноз результата.
+              Drag the slider and see the difference. Our AI analyzes your bite, tooth position and builds an accurate treatment forecast.
             </p>
           </div>
 
@@ -216,7 +216,7 @@ export default function Index() {
               {/* AFTER */}
               <div className="absolute inset-0 bg-gradient-to-r from-card via-card to-primary/5 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="font-display text-6xl text-primary/20 font-light">После</div>
+                  <div className="font-display text-6xl text-primary/20 font-light">After</div>
                   <div className="mt-2 flex justify-center gap-1">
                     {[...Array(32)].map((_, i) => (
                       <div
@@ -226,7 +226,7 @@ export default function Index() {
                       />
                     ))}
                   </div>
-                  <div className="mt-3 text-xs font-body text-primary/60 tracking-widest uppercase">Идеальный прикус</div>
+                  <div className="mt-3 text-xs font-body text-primary/60 tracking-widest uppercase">Perfect Alignment</div>
                 </div>
               </div>
 
@@ -236,7 +236,7 @@ export default function Index() {
                 style={{ clipPath: `inset(0 ${100 - sliderValue}% 0 0)` }}
               >
                 <div className="text-center">
-                  <div className="font-display text-6xl text-muted-foreground/20 font-light">До</div>
+                  <div className="font-display text-6xl text-muted-foreground/20 font-light">Before</div>
                   <div className="mt-2 flex justify-center gap-1">
                     {[...Array(32)].map((_, i) => (
                       <div
@@ -250,7 +250,7 @@ export default function Index() {
                       />
                     ))}
                   </div>
-                  <div className="mt-3 text-xs font-body text-muted-foreground/60 tracking-widest uppercase">Исходное состояние</div>
+                  <div className="mt-3 text-xs font-body text-muted-foreground/60 tracking-widest uppercase">Initial State</div>
                 </div>
               </div>
 
@@ -265,10 +265,10 @@ export default function Index() {
               </div>
 
               <div className="absolute top-4 left-4 bg-background/80 backdrop-blur-sm border border-border rounded-full px-3 py-1 z-20">
-                <span className="font-body text-xs text-muted-foreground">До лечения</span>
+                <span className="font-body text-xs text-muted-foreground">Before</span>
               </div>
               <div className="absolute top-4 right-4 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full px-3 py-1 z-20">
-                <span className="font-body text-xs text-primary">После AI лечения</span>
+                <span className="font-body text-xs text-primary">After AI Treatment</span>
               </div>
             </div>
 
@@ -292,24 +292,24 @@ export default function Index() {
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div className={`w-2 h-2 rounded-full ${scanDone ? "bg-primary" : scanning ? "bg-yellow-400 animate-pulse" : "bg-muted-foreground"}`} />
                   <span className="font-body text-sm text-muted-foreground">
-                    {scanDone ? "Анализ завершён — результат готов" : scanning ? "AI сканирует прикус..." : "Загрузи фото для персонального анализа"}
+                    {scanDone ? "Analysis complete — result is ready" : scanning ? "AI is scanning your bite..." : "Upload a photo for a personalized analysis"}
                   </span>
                 </div>
                 {scanDone ? (
                   <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 text-left">
-                    <div className="font-body text-xs text-primary mb-2 uppercase tracking-wider">AI Диагноз</div>
+                    <div className="font-body text-xs text-primary mb-2 uppercase tracking-wider">AI Diagnosis</div>
                     <div className="space-y-1">
                       <div className="flex justify-between font-body text-sm">
-                        <span className="text-muted-foreground">Тип прикуса</span>
-                        <span className="text-foreground">Дистальный</span>
+                        <span className="text-muted-foreground">Bite type</span>
+                        <span className="text-foreground">Distal</span>
                       </div>
                       <div className="flex justify-between font-body text-sm">
-                        <span className="text-muted-foreground">Срок лечения</span>
-                        <span className="text-primary font-medium">14–18 мес.</span>
+                        <span className="text-muted-foreground">Treatment time</span>
+                        <span className="text-primary font-medium">14–18 months</span>
                       </div>
                       <div className="flex justify-between font-body text-sm">
-                        <span className="text-muted-foreground">Рекомендация</span>
-                        <span className="text-foreground">Элайнеры</span>
+                        <span className="text-muted-foreground">Recommendation</span>
+                        <span className="text-foreground">Clear Aligners</span>
                       </div>
                     </div>
                   </div>
@@ -320,7 +320,7 @@ export default function Index() {
                     className="w-full bg-primary text-primary-foreground font-body font-medium py-3 rounded-xl hover:bg-primary/90 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
                   >
                     <Icon name={scanning ? "Loader" : "ScanFace"} size={16} className={scanning ? "animate-spin" : ""} />
-                    {scanning ? "Анализируем..." : "Запустить AI анализ"}
+                    {scanning ? "Analyzing..." : "Run AI Analysis"}
                   </button>
                 )}
               </div>
@@ -329,7 +329,7 @@ export default function Index() {
                   onClick={() => scrollTo("booking")}
                   className="bg-primary text-primary-foreground font-body font-medium px-8 py-3 rounded-full hover:bg-primary/90 transition-all hover:scale-105"
                 >
-                  Записаться к ортодонту →
+                  Book an Orthodontist →
                 </button>
               )}
             </div>
@@ -343,11 +343,11 @@ export default function Index() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
               <Icon name="Users" size={12} className="text-primary" />
-              <span className="text-xs font-body text-primary tracking-widest uppercase">Команда</span>
+              <span className="text-xs font-body text-primary tracking-widest uppercase">Our Team</span>
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-light text-foreground">
-              Ведущие ортодонты
-              <span className="block text-gradient italic font-medium">клиники OrthoAI</span>
+              Leading Orthodontists
+              <span className="block text-gradient italic font-medium">of OrthoAI Clinic</span>
             </h2>
           </div>
 
@@ -387,7 +387,7 @@ export default function Index() {
                     onClick={() => scrollTo("booking")}
                     className="w-full border border-primary/30 text-primary font-body font-medium py-2.5 rounded-xl hover:bg-primary/10 transition-all text-sm"
                   >
-                    Записаться к врачу
+                    Book This Doctor
                   </button>
                 </div>
               </div>
@@ -402,13 +402,13 @@ export default function Index() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
               <Icon name="CalendarCheck" size={12} className="text-primary" />
-              <span className="text-xs font-body text-primary tracking-widest uppercase">Запись онлайн</span>
+              <span className="text-xs font-body text-primary tracking-widest uppercase">Book Online</span>
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-light text-foreground">
-              Забронируй консультацию
-              <span className="block text-gradient italic font-medium">бесплатно</span>
+              Book a Consultation
+              <span className="block text-gradient italic font-medium">for free</span>
             </h2>
-            <p className="font-body text-muted-foreground mt-3">Первая консультация с AI-анализом — 0 ₽. Без обязательств.</p>
+            <p className="font-body text-muted-foreground mt-3">First consultation with AI analysis — $0. No commitment required.</p>
           </div>
 
           {submitted ? (
@@ -416,15 +416,15 @@ export default function Index() {
               <div className="w-20 h-20 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto mb-6 animate-pulse-glow">
                 <Icon name="CheckCircle" size={32} className="text-primary" />
               </div>
-              <h3 className="font-display text-3xl font-medium text-foreground mb-2">Запись принята!</h3>
-              <p className="font-body text-muted-foreground">Мы позвоним вам в течение 15 минут для подтверждения.</p>
+              <h3 className="font-display text-3xl font-medium text-foreground mb-2">Booking Confirmed!</h3>
+              <p className="font-body text-muted-foreground">We'll call you within 15 minutes to confirm your appointment.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-card border border-border rounded-3xl p-6">
                 <h3 className="font-body font-medium text-foreground mb-4 flex items-center gap-2">
                   <Icon name="Calendar" size={16} className="text-primary" />
-                  Выберите дату
+                  Choose a Date
                 </h3>
                 <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
                   {weekDays.map((d, i) => (
@@ -439,14 +439,14 @@ export default function Index() {
                     >
                       <span className="font-body text-xs mb-1">{d.day}</span>
                       <span className="font-body font-medium text-sm">{d.date}</span>
-                      <span className="font-body text-xs opacity-60">мая</span>
+                      <span className="font-body text-xs opacity-60">May</span>
                     </button>
                   ))}
                 </div>
 
                 <h3 className="font-body font-medium text-foreground mb-3 flex items-center gap-2">
                   <Icon name="Clock" size={16} className="text-primary" />
-                  Время приёма
+                  Appointment Time
                 </h3>
                 <div className="grid grid-cols-4 gap-2">
                   {timeSlots.map((slot) => (
@@ -468,39 +468,39 @@ export default function Index() {
               <form onSubmit={handleSubmit} className="bg-card border border-border rounded-3xl p-6 flex flex-col gap-4">
                 <h3 className="font-body font-medium text-foreground flex items-center gap-2">
                   <Icon name="User" size={16} className="text-primary" />
-                  Ваши данные
+                  Your Details
                 </h3>
 
                 <div>
-                  <label className="font-body text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">Имя</label>
+                  <label className="font-body text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">Full Name</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Алексей Петров"
+                    placeholder="Alex Johnson"
                     className="w-full bg-secondary border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="font-body text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">Телефон</label>
+                  <label className="font-body text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">Phone</label>
                   <input
                     type="tel"
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+7 (999) 000-00-00"
+                    placeholder="+1 (999) 000-0000"
                     className="w-full bg-secondary border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="font-body text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">Пожелания (необязательно)</label>
+                  <label className="font-body text-xs text-muted-foreground mb-1.5 block uppercase tracking-wider">Notes (optional)</label>
                   <textarea
                     value={formData.comment}
                     onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                    placeholder="Опишите вашу ситуацию..."
+                    placeholder="Describe your situation..."
                     rows={3}
                     className="w-full bg-secondary border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors resize-none"
                   />
@@ -510,7 +510,7 @@ export default function Index() {
                   <div className="bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 flex items-center gap-2">
                     <Icon name="CheckCircle" size={14} className="text-primary" />
                     <span className="font-body text-sm text-primary">
-                      {weekDays[activeDay].day}, {weekDays[activeDay].date} мая · {activeSlot}
+                      {weekDays[activeDay].day}, May {weekDays[activeDay].date} · {activeSlot}
                     </span>
                   </div>
                 )}
@@ -520,11 +520,11 @@ export default function Index() {
                   className="mt-auto bg-primary text-primary-foreground font-body font-medium py-4 rounded-xl hover:bg-primary/90 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
                 >
                   <Icon name="CalendarCheck" size={16} />
-                  Подтвердить запись — бесплатно
+                  Confirm Appointment — Free
                 </button>
 
                 <p className="font-body text-xs text-muted-foreground text-center">
-                  Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                  By clicking, you agree to our privacy policy
                 </p>
               </form>
             </div>
@@ -537,9 +537,9 @@ export default function Index() {
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: "MapPin", title: "Адрес", lines: ["Москва, Тверская 15", "2-й этаж, офис 201"] },
-              { icon: "Phone", title: "Телефон", lines: ["+7 (495) 000-00-00", "Пн–Сб, 9:00–20:00"] },
-              { icon: "MessageCircle", title: "WhatsApp", lines: ["Написать в чат", "Ответим за 5 минут"] },
+              { icon: "MapPin", title: "Address", lines: ["15 Park Avenue, New York", "2nd floor, Suite 201"] },
+              { icon: "Phone", title: "Phone", lines: ["+1 (800) 000-0000", "Mon–Sat, 9:00 AM–8:00 PM"] },
+              { icon: "MessageCircle", title: "WhatsApp", lines: ["Chat with us", "Reply within 5 minutes"] },
             ].map((c) => (
               <div key={c.title} className="card-hover bg-card border border-border rounded-2xl p-6 flex items-start gap-4">
                 <div className="w-10 h-10 min-w-[40px] rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -566,10 +566,10 @@ export default function Index() {
             </div>
             <span className="font-display text-lg font-semibold text-foreground">OrthoAI</span>
           </div>
-          <p className="font-body text-xs text-muted-foreground">© 2025 OrthoAI. Все права защищены.</p>
+          <p className="font-body text-xs text-muted-foreground">© 2025 OrthoAI. All rights reserved.</p>
           <div className="flex gap-4">
-            <span className="font-body text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Политика конфиденциальности</span>
-            <span className="font-body text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Контакты</span>
+            <span className="font-body text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Privacy Policy</span>
+            <span className="font-body text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Contacts</span>
           </div>
         </div>
       </footer>
