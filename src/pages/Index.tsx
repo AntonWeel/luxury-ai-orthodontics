@@ -53,6 +53,88 @@ const stats = [
   { icon: "Clock", value: "30 Sec", label: "Instant Results" },
 ];
 
+function AlignmentSliderSection() {
+  const [alignment, setAlignment] = useState(30);
+
+  const teeth = [
+    { x: 12, y: 8, w: 14, h: 20, tilt: -8 },
+    { x: 28, y: 4, w: 13, h: 22, tilt: -4 },
+    { x: 43, y: 2, w: 13, h: 23, tilt: -1 },
+    { x: 58, y: 2, w: 13, h: 23, tilt: 1 },
+    { x: 73, y: 4, w: 13, h: 22, tilt: 4 },
+    { x: 88, y: 8, w: 14, h: 20, tilt: 8 },
+  ];
+
+  const progress = alignment / 100;
+
+  return (
+    <section className="py-20 px-8 bg-white">
+      <div className="max-w-3xl mx-auto text-center">
+        <div className="inline-flex items-center gap-2 text-purple-600 text-xs font-bold uppercase tracking-widest mb-4">
+          <span className="w-6 h-px bg-purple-400 inline-block" />
+          Alignment Progress
+          <span className="w-6 h-px bg-purple-400 inline-block" />
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900 mb-3">
+          See Your <span className="text-gradient">Smile Transform</span>
+        </h2>
+        <p className="text-gray-500 mb-12 text-sm">
+          Move the slider to visualise how your teeth align over time
+        </p>
+
+        {/* Teeth SVG */}
+        <div className="relative mb-10 flex justify-center">
+          <svg viewBox="0 0 116 50" className="w-72 h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+            {teeth.map((t, i) => {
+              const centerX = t.x + t.w / 2;
+              const centerY = t.y + t.h / 2;
+              const tilt = t.tilt * (1 - progress);
+              const offsetY = Math.abs(t.tilt) * 0.3 * (1 - progress);
+              return (
+                <g key={i} transform={`rotate(${tilt}, ${centerX}, ${centerY}) translate(0, ${offsetY})`}
+                  style={{ transition: "transform 0.05s" }}>
+                  <rect
+                    x={t.x} y={t.y} width={t.w} height={t.h}
+                    rx={4}
+                    fill={`hsl(${270 - 270 * progress}, ${40 + 40 * progress}%, ${92 + 6 * progress}%)`}
+                    stroke={`hsl(${270 - 270 * progress}, 30%, 75%)`}
+                    strokeWidth="0.8"
+                  />
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        {/* Percentage badge */}
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <span className="text-5xl font-bold text-gray-900">{alignment}%</span>
+          <span className="text-left text-sm text-gray-500 leading-tight">alignment<br />achieved</span>
+        </div>
+
+        {/* Slider */}
+        <div className="px-4">
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={alignment}
+            onChange={(e) => setAlignment(Number(e.target.value))}
+            className="w-full h-2 rounded-full appearance-none cursor-pointer"
+            style={{
+              background: `linear-gradient(to right, #9333ea ${alignment}%, #e5e7eb ${alignment}%)`,
+            }}
+          />
+          <div className="flex justify-between text-xs text-gray-400 mt-2">
+            <span>Start</span>
+            <span>Perfect smile</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Index() {
   const [sliderValue, setSliderValue] = useState(50);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -316,6 +398,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* ALIGNMENT SLIDER SECTION */}
+      <AlignmentSliderSection />
 
       {/* AI PREVIEW SECTION */}
       <section id="preview" className="py-20 px-8 bg-white">
