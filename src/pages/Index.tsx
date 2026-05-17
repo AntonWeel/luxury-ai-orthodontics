@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
 const BEFORE_AFTER_IMG = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/9553bf85-ffd0-4d15-ba67-ea474e306a50.jpg";
@@ -62,6 +62,33 @@ export default function Index() {
   const [analysisDone, setAnalysisDone] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [dragOver, setDragOver] = useState(false);
+
+  const [activeSection, setActiveSection] = useState("home");
+
+  const navItems = [
+    { label: "Home", id: "home" },
+    { label: "Services", id: "preview" },
+    { label: "How it works", id: "how" },
+    { label: "About us", id: "reviews" },
+    { label: "For Doctors", id: "doctors" },
+  ];
+
+  useEffect(() => {
+    const sectionIds = navItems.map((i) => i.id);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -127,17 +154,15 @@ export default function Index() {
           <span className="text-purple-500 text-lg">✦</span>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          {[
-            { label: "Home", id: "home" },
-            { label: "Services", id: "preview" },
-            { label: "How it works", id: "how" },
-            { label: "About us", id: "reviews" },
-            { label: "For Doctors", id: "doctors" },
-          ].map((item) => (
+          {navItems.map((item) => (
             <button
               key={item.label}
               onClick={() => scrollTo(item.id)}
-              className="text-gray-600 hover:text-purple-600 text-sm transition-colors font-medium"
+              className={`text-sm transition-colors font-medium ${
+                activeSection === item.id
+                  ? "text-purple-600 font-semibold"
+                  : "text-gray-600 hover:text-purple-600"
+              }`}
             >
               {item.label}
             </button>
