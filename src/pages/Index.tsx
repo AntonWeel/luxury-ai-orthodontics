@@ -127,12 +127,19 @@ export default function Index() {
           <span className="text-purple-500 text-lg">✦</span>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          {["Home", "Services", "How it works", "About us", "For Doctors"].map((item) => (
+          {[
+            { label: "Home", id: "home" },
+            { label: "Services", id: "preview" },
+            { label: "How it works", id: "how" },
+            { label: "About us", id: "reviews" },
+            { label: "For Doctors", id: "doctors" },
+          ].map((item) => (
             <button
-              key={item}
+              key={item.label}
+              onClick={() => scrollTo(item.id)}
               className="text-gray-600 hover:text-purple-600 text-sm transition-colors font-medium"
             >
-              {item}
+              {item.label}
             </button>
           ))}
         </div>
