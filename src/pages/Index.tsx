@@ -97,7 +97,7 @@ function AlignmentSliderSection() {
 
         {/* Teeth SVG */}
         <div className="relative mb-10 flex justify-center">
-          <svg viewBox="0 0 116 32" className="w-80 h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 116 36" className="w-80 h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
             {teeth.map((t, i) => {
               const target = targetPositions[i];
               const curX = t.x + (target.x - t.x) * progress;
@@ -105,20 +105,42 @@ function AlignmentSliderSection() {
               const centerX = curX + t.w / 2;
               const centerY = curY + t.h / 2;
               const tilt = t.tilt * (1 - progress);
-              const opacity = t.missing ? Math.min(1, progress * 2) : 1;
+              // отсутствующий зуб появляется с прогрессом
+              const missingOpacity = t.missing ? Math.min(1, progress * 2) : 1;
+              // все зубы прозрачные при 30% и ниже, непрозрачные выше
+              const globalOpacity = alignment <= 30 ? 0.25 : 0.25 + ((alignment - 30) / 70) * 0.75;
+              const finalOpacity = missingOpacity * globalOpacity;
+
+              const w = t.w;
+              const h = t.h;
+              // Форма зуба: верх плоский с закруглёнными углами, низ сужается к двум корням
+              const r = 2.5;
+              const toothPath = `
+                M ${curX + r},${curY}
+                L ${curX + w - r},${curY}
+                Q ${curX + w},${curY} ${curX + w},${curY + r}
+                L ${curX + w},${curY + h * 0.55}
+                Q ${curX + w * 0.75},${curY + h * 0.72} ${curX + w * 0.6},${curY + h * 0.85}
+                L ${curX + w * 0.55},${curY + h}
+                L ${curX + w * 0.45},${curY + h}
+                L ${curX + w * 0.4},${curY + h * 0.85}
+                Q ${curX + w * 0.25},${curY + h * 0.72} ${curX},${curY + h * 0.55}
+                L ${curX},${curY + r}
+                Q ${curX},${curY} ${curX + r},${curY}
+                Z
+              `;
 
               return (
                 <g
                   key={i}
-                  style={{ transition: "transform 0.05s", opacity }}
+                  style={{ opacity: finalOpacity, transition: "opacity 0.1s" }}
                   transform={`rotate(${tilt}, ${centerX}, ${centerY})`}
                 >
-                  <rect
-                    x={curX} y={curY} width={t.w} height={t.h}
-                    rx={3.5}
-                    fill={`hsl(${260 - 260 * progress}, ${35 + 45 * progress}%, ${88 + 10 * progress}%)`}
-                    stroke={`hsl(${260 - 260 * progress}, 25%, 72%)`}
-                    strokeWidth="0.7"
+                  <path
+                    d={toothPath}
+                    fill={`hsl(${260 - 260 * progress}, ${35 + 45 * progress}%, ${84 + 14 * progress}%)`}
+                    stroke={`hsl(${260 - 260 * progress}, 20%, 68%)`}
+                    strokeWidth="0.6"
                   />
                 </g>
               );
