@@ -98,37 +98,31 @@ function AlignmentSliderSection() {
         <div className="relative mb-10 flex justify-center">
           <svg viewBox="0 0 116 52" className="w-96 h-auto" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              {/* Градиент коронки — белый глянец */}
-              <linearGradient id="toothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="40%" stopColor="#f4f0ff" />
-                <stop offset="100%" stopColor="#c8bfea" />
+              {/* Единый градиент — весь зуб белый, как в рекламе */}
+              <linearGradient id="toothGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#e8e4f8" />
+                <stop offset="30%" stopColor="#ffffff" />
+                <stop offset="70%" stopColor="#f5f2ff" />
+                <stop offset="100%" stopColor="#ccc5e8" />
               </linearGradient>
-              {/* Градиент корня — тёплый жёлто-бежевый */}
-              <linearGradient id="rootGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#e8d9b0" />
-                <stop offset="50%" stopColor="#d4bc8a" />
-                <stop offset="100%" stopColor="#b8985a" />
+              <linearGradient id="ghostGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#e8e4f8" stopOpacity="0.25" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.15" />
+                <stop offset="100%" stopColor="#ccc5e8" stopOpacity="0.2" />
               </linearGradient>
-              {/* Градиент корня больного зуба */}
-              <linearGradient id="rootGhostGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#e8d9b0" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#b8985a" stopOpacity="0.1" />
-              </linearGradient>
-              {/* Градиент для больного/прозрачного зуба */}
-              <linearGradient id="ghostGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.1" />
-              </linearGradient>
-              {/* Блик сверху */}
+              {/* Блик — вертикальный, по центру-левее */}
               <linearGradient id="shineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+                <stop offset="60%" stopColor="#ffffff" stopOpacity="0.4" />
                 <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
               </linearGradient>
-              {/* Линия десны — скрывает часть корня */}
-              <clipPath id="crownClip">
-                <rect x="0" y="0" width="116" height="32" />
-              </clipPath>
+              {/* Боковая тень для объёма */}
+              <linearGradient id="shadowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#b0a8d8" stopOpacity="0.5" />
+                <stop offset="20%" stopColor="#b0a8d8" stopOpacity="0" />
+                <stop offset="80%" stopColor="#b0a8d8" stopOpacity="0" />
+                <stop offset="100%" stopColor="#9890c8" stopOpacity="0.6" />
+              </linearGradient>
             </defs>
             {teeth.map((t, i) => {
               const target = targetPositions[i];
@@ -138,55 +132,44 @@ function AlignmentSliderSection() {
               const centerY = curY + t.h / 2;
               const tilt = t.tilt * (1 - progress);
               const missingOpacity = t.missing ? Math.min(1, progress * 2.5) : 1;
-              // ghost-зуб прозрачен в начале, становится нормальным к 100%
               const ghostOpacity = t.ghost ? 0.18 + progress * 0.82 : 1;
               const finalOpacity = missingOpacity * ghostOpacity;
 
               const w = t.w;
               const h = t.h;
-
-              // Реалистичная форма зуба-резца:
-              // — верх широкий с тремя бугорками (мамелонами)
-              // — бока плавно сужаются к шейке
-              // — снизу один корень, сужающийся к кончику
               const cx = curX + w / 2;
-              const crown = `
-                M ${curX + 1},${curY + h * 0.12}
-                Q ${curX + 1},${curY} ${curX + w * 0.2},${curY}
-                Q ${cx - w * 0.1},${curY - 1.2} ${cx},${curY}
-                Q ${cx + w * 0.1},${curY - 1.2} ${curX + w * 0.8},${curY}
-                Q ${curX + w - 1},${curY} ${curX + w - 1},${curY + h * 0.12}
-                C ${curX + w},${curY + h * 0.35} ${curX + w - 0.5},${curY + h * 0.5} ${curX + w * 0.78},${curY + h * 0.62}
-                C ${curX + w * 0.68},${curY + h * 0.72} ${cx + w * 0.12},${curY + h * 0.78} ${cx + 1},${curY + h * 0.88}
-                Q ${cx},${curY + h * 0.96} ${cx - 1},${curY + h * 0.88}
-                C ${cx - w * 0.12},${curY + h * 0.78} ${curX + w * 0.32},${curY + h * 0.72} ${curX + w * 0.22},${curY + h * 0.62}
-                C ${curX + 0.5},${curY + h * 0.5} ${curX},${curY + h * 0.35} ${curX + 1},${curY + h * 0.12}
+
+              // Коронка — широкий верх, слегка сужается к шейке
+              const crownH = h * 0.58;
+              const crownPath = `
+                M ${curX + 1.5},${curY + 2}
+                Q ${curX + 1},${curY} ${curX + w * 0.22},${curY}
+                Q ${cx - w * 0.08},${curY - 1} ${cx},${curY}
+                Q ${cx + w * 0.08},${curY - 1} ${curX + w * 0.78},${curY}
+                Q ${curX + w - 1},${curY} ${curX + w - 1.5},${curY + 2}
+                C ${curX + w},${curY + crownH * 0.3} ${curX + w - 1},${curY + crownH * 0.65} ${curX + w * 0.82},${curY + crownH}
+                C ${curX + w * 0.72},${curY + crownH + 1.5} ${cx + 2},${curY + crownH + 2} ${cx},${curY + crownH + 2}
+                C ${cx - 2},${curY + crownH + 2} ${curX + w * 0.28},${curY + crownH + 1.5} ${curX + w * 0.18},${curY + crownH}
+                C ${curX + 1},${curY + crownH * 0.65} ${curX},${curY + crownH * 0.3} ${curX + 1.5},${curY + 2}
                 Z
               `;
 
-              // Блик — узкий светлый эллипс в верхней части
-              const shineX = curX + w * 0.25;
-              const shineY = curY + h * 0.06;
-              const shineW = w * 0.3;
-              const shineH = h * 0.22;
+              // Корень — плавно сужается от шейки к острому кончику, белый
+              const neckTop = curY + crownH + 1;
+              const neckLW = w * 0.32;
+              const rootTip = curY + h * 1.48;
+              const rootPath = `
+                M ${cx - neckLW / 2},${neckTop}
+                C ${cx - neckLW / 2},${neckTop + (rootTip - neckTop) * 0.3}
+                  ${cx - 1.5},${neckTop + (rootTip - neckTop) * 0.7}
+                  ${cx},${rootTip}
+                C ${cx + 1.5},${neckTop + (rootTip - neckTop) * 0.7}
+                  ${cx + neckLW / 2},${neckTop + (rootTip - neckTop) * 0.3}
+                  ${cx + neckLW / 2},${neckTop}
+                Z
+              `;
 
               const isGhost = t.ghost && progress < 0.95;
-
-              // Корень: сужается от шейки зуба вниз, слегка изогнут
-              const neckY = curY + h * 0.82;
-              const neckW = w * 0.38;
-              const rootTip = curY + h * 1.55;
-              const rootPath = `
-                M ${cx - neckW / 2},${neckY}
-                C ${cx - neckW / 2 - 1},${neckY + (rootTip - neckY) * 0.4}
-                  ${cx - 1.2},${neckY + (rootTip - neckY) * 0.75}
-                  ${cx - 0.5},${rootTip}
-                Q ${cx},${rootTip + 1} ${cx + 0.5},${rootTip}
-                C ${cx + 1.2},${neckY + (rootTip - neckY) * 0.75}
-                  ${cx + neckW / 2 + 1},${neckY + (rootTip - neckY) * 0.4}
-                  ${cx + neckW / 2},${neckY}
-                Z
-              `;
 
               return (
                 <g
@@ -194,45 +177,37 @@ function AlignmentSliderSection() {
                   style={{ opacity: finalOpacity, transition: "opacity 0.08s" }}
                   transform={`rotate(${tilt}, ${centerX}, ${centerY})`}
                 >
-                  {/* Корень (рисуется ДО коронки, чтобы быть под ней) */}
+                  {/* Корень */}
                   <path
                     d={rootPath}
-                    fill={isGhost ? "url(#rootGhostGrad)" : "url(#rootGrad)"}
-                    stroke={isGhost ? "rgba(184,152,90,0.2)" : "rgba(160,120,60,0.4)"}
+                    fill={isGhost ? "url(#ghostGrad)" : "url(#toothGrad)"}
+                    stroke={isGhost ? "rgba(200,190,240,0.2)" : "rgba(180,170,220,0.5)"}
                     strokeWidth="0.4"
                   />
-                  {/* Тело зуба (коронка) */}
+                  {/* Коронка */}
                   <path
-                    d={crown}
+                    d={crownPath}
                     fill={isGhost ? "url(#ghostGrad)" : "url(#toothGrad)"}
-                    stroke={isGhost ? "rgba(167,139,250,0.4)" : "rgba(180,160,220,0.55)"}
+                    stroke={isGhost ? "rgba(200,190,240,0.2)" : "rgba(170,160,215,0.6)"}
                     strokeWidth="0.5"
                   />
-                  {/* Блик */}
+                  {/* Боковые тени для объёма */}
                   {!isGhost && (
-                    <ellipse
-                      cx={shineX + shineW / 2} cy={shineY + shineH / 2}
-                      rx={shineW / 2} ry={shineH / 2}
+                    <path d={crownPath} fill="url(#shadowGrad)" />
+                  )}
+                  {/* Блик — узкая полоса слева от центра */}
+                  {!isGhost && (
+                    <rect
+                      x={cx - w * 0.22} y={curY + 1.5}
+                      width={w * 0.12} height={crownH * 0.55}
+                      rx={w * 0.06}
                       fill="url(#shineGrad)"
-                      transform={`rotate(-15, ${shineX + shineW / 2}, ${shineY + shineH / 2})`}
+                      opacity="0.85"
                     />
                   )}
                 </g>
               );
             })}
-
-            {/* Десна — волнистая полоса, перекрывает основания корней */}
-            <path
-              d="M 0,31 Q 8,27 16,30 Q 24,33 32,29 Q 40,25 48,29 Q 56,33 64,28 Q 72,24 80,28 Q 88,32 96,28 Q 104,24 116,28 L 116,52 L 0,52 Z"
-              fill="#f9a8b8"
-              opacity="0.85"
-            />
-            {/* Светлая часть десны сверху */}
-            <path
-              d="M 0,31 Q 8,27 16,30 Q 24,33 32,29 Q 40,25 48,29 Q 56,33 64,28 Q 72,24 80,28 Q 88,32 96,28 Q 104,24 116,28 L 116,33 Q 104,30 96,33 Q 88,37 80,33 Q 72,29 64,33 Q 56,37 48,33 Q 40,29 32,33 Q 24,37 16,34 Q 8,31 0,34 Z"
-              fill="#fbc4cf"
-              opacity="0.7"
-            />
           </svg>
         </div>
 
