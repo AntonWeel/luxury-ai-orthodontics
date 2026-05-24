@@ -56,20 +56,19 @@ const stats = [
 function AlignmentSliderSection() {
   const [alignment, setAlignment] = useState(30);
 
-  // missing=true — отсутствующий зуб (появляется при выравнивании)
+  // missing=true — отсутствующий зуб (появляется при выравнивании), ghost=true — прозрачный больной зуб
   const teeth = [
-    { x: 8,  y: 14, w: 13, h: 18, tilt: -22, offsetY: 6,  missing: false },
-    { x: 23, y: 4,  w: 11, h: 24, tilt: -16, offsetY: 3,  missing: false },
-    { x: 36, y: 10, w: 13, h: 20, tilt: 12,  offsetY: 5,  missing: false },
-    { x: 51, y: 0,  w: 12, h: 26, tilt: -6,  offsetY: 0,  missing: true  },
-    { x: 65, y: 6,  w: 13, h: 21, tilt: 14,  offsetY: 4,  missing: false },
-    { x: 80, y: 2,  w: 11, h: 24, tilt: -10, offsetY: 2,  missing: false },
-    { x: 93, y: 12, w: 13, h: 18, tilt: 20,  offsetY: 5,  missing: false },
+    { x: 8,  y: 14, w: 13, h: 18, tilt: -22, offsetY: 6,  missing: false, ghost: false },
+    { x: 23, y: 4,  w: 11, h: 24, tilt: -16, offsetY: 3,  missing: false, ghost: false },
+    { x: 36, y: 10, w: 13, h: 20, tilt: 12,  offsetY: 5,  missing: false, ghost: false },
+    { x: 51, y: 0,  w: 12, h: 26, tilt: -6,  offsetY: 0,  missing: true,  ghost: false },
+    { x: 65, y: 6,  w: 13, h: 21, tilt: 14,  offsetY: 4,  missing: false, ghost: true  },
+    { x: 80, y: 2,  w: 11, h: 24, tilt: -10, offsetY: 2,  missing: false, ghost: false },
+    { x: 93, y: 12, w: 13, h: 18, tilt: 20,  offsetY: 5,  missing: false, ghost: false },
   ];
 
   const progress = alignment / 100;
 
-  // Целевые позиции (ровный ряд)
   const targetPositions = [
     { x: 6,  y: 2 },
     { x: 21, y: 2 },
@@ -97,7 +96,25 @@ function AlignmentSliderSection() {
 
         {/* Teeth SVG */}
         <div className="relative mb-10 flex justify-center">
-          <svg viewBox="0 0 116 36" className="w-80 h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 116 40" className="w-96 h-auto" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              {/* Градиент для здорового зуба — блестящий как в рекламе */}
+              <linearGradient id="toothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="35%" stopColor="#f0eeff" />
+                <stop offset="100%" stopColor="#c8bfea" />
+              </linearGradient>
+              {/* Градиент для больного/прозрачного зуба */}
+              <linearGradient id="ghostGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.15" />
+              </linearGradient>
+              {/* Блик сверху */}
+              <linearGradient id="shineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+              </linearGradient>
+            </defs>
             {teeth.map((t, i) => {
               const target = targetPositions[i];
               const curX = t.x + (target.x - t.x) * progress;
@@ -105,43 +122,67 @@ function AlignmentSliderSection() {
               const centerX = curX + t.w / 2;
               const centerY = curY + t.h / 2;
               const tilt = t.tilt * (1 - progress);
-              // отсутствующий зуб появляется с прогрессом
-              const missingOpacity = t.missing ? Math.min(1, progress * 2) : 1;
-              // все зубы прозрачные при 30% и ниже, непрозрачные выше
-              const globalOpacity = alignment <= 30 ? 0.25 : 0.25 + ((alignment - 30) / 70) * 0.75;
-              const finalOpacity = missingOpacity * globalOpacity;
+              const missingOpacity = t.missing ? Math.min(1, progress * 2.5) : 1;
+              // ghost-зуб прозрачен в начале, становится нормальным к 100%
+              const ghostOpacity = t.ghost ? 0.18 + progress * 0.82 : 1;
+              const finalOpacity = missingOpacity * ghostOpacity;
 
               const w = t.w;
               const h = t.h;
-              // Форма зуба: верх плоский с закруглёнными углами, низ сужается к двум корням
-              const r = 2.5;
-              const toothPath = `
+              const r = 3;
+
+              // Форма зуба с широкой коронкой и двумя корнями (как резец)
+              const crown = `
                 M ${curX + r},${curY}
                 L ${curX + w - r},${curY}
                 Q ${curX + w},${curY} ${curX + w},${curY + r}
-                L ${curX + w},${curY + h * 0.55}
-                Q ${curX + w * 0.75},${curY + h * 0.72} ${curX + w * 0.6},${curY + h * 0.85}
-                L ${curX + w * 0.55},${curY + h}
-                L ${curX + w * 0.45},${curY + h}
-                L ${curX + w * 0.4},${curY + h * 0.85}
-                Q ${curX + w * 0.25},${curY + h * 0.72} ${curX},${curY + h * 0.55}
+                L ${curX + w},${curY + h * 0.52}
+                Q ${curX + w * 0.78},${curY + h * 0.68} ${curX + w * 0.62},${curY + h * 0.82}
+                L ${curX + w * 0.57},${curY + h}
+                L ${curX + w * 0.43},${curY + h}
+                L ${curX + w * 0.38},${curY + h * 0.82}
+                Q ${curX + w * 0.22},${curY + h * 0.68} ${curX},${curY + h * 0.52}
                 L ${curX},${curY + r}
                 Q ${curX},${curY} ${curX + r},${curY}
                 Z
               `;
 
+              // Блик — узкий светлый эллипс в верхней части
+              const shineX = curX + w * 0.25;
+              const shineY = curY + h * 0.06;
+              const shineW = w * 0.3;
+              const shineH = h * 0.22;
+
+              const isGhost = t.ghost && progress < 0.95;
+
               return (
                 <g
                   key={i}
-                  style={{ opacity: finalOpacity, transition: "opacity 0.1s" }}
+                  style={{ opacity: finalOpacity, transition: "opacity 0.08s" }}
                   transform={`rotate(${tilt}, ${centerX}, ${centerY})`}
                 >
-                  <path
-                    d={toothPath}
-                    fill={`hsl(${260 - 260 * progress}, ${35 + 45 * progress}%, ${84 + 14 * progress}%)`}
-                    stroke={`hsl(${260 - 260 * progress}, 20%, 68%)`}
-                    strokeWidth="0.6"
+                  {/* Тень под зубом */}
+                  <ellipse
+                    cx={curX + w / 2} cy={curY + h + 1.5}
+                    rx={w * 0.38} ry={1.2}
+                    fill="rgba(120,100,180,0.13)"
                   />
+                  {/* Тело зуба */}
+                  <path
+                    d={crown}
+                    fill={isGhost ? "url(#ghostGrad)" : "url(#toothGrad)"}
+                    stroke={isGhost ? "rgba(167,139,250,0.4)" : "rgba(180,160,220,0.6)"}
+                    strokeWidth="0.5"
+                  />
+                  {/* Блик */}
+                  {!isGhost && (
+                    <ellipse
+                      cx={shineX + shineW / 2} cy={shineY + shineH / 2}
+                      rx={shineW / 2} ry={shineH / 2}
+                      fill="url(#shineGrad)"
+                      transform={`rotate(-15, ${shineX + shineW / 2}, ${shineY + shineH / 2})`}
+                    />
+                  )}
                 </g>
               );
             })}
