@@ -129,21 +129,23 @@ function AlignmentSliderSection() {
 
               const w = t.w;
               const h = t.h;
-              const r = 3;
 
-              // Форма зуба с широкой коронкой и двумя корнями (как резец)
+              // Реалистичная форма зуба-резца:
+              // — верх широкий с тремя бугорками (мамелонами)
+              // — бока плавно сужаются к шейке
+              // — снизу один корень, сужающийся к кончику
+              const cx = curX + w / 2;
               const crown = `
-                M ${curX + r},${curY}
-                L ${curX + w - r},${curY}
-                Q ${curX + w},${curY} ${curX + w},${curY + r}
-                L ${curX + w},${curY + h * 0.52}
-                Q ${curX + w * 0.78},${curY + h * 0.68} ${curX + w * 0.62},${curY + h * 0.82}
-                L ${curX + w * 0.57},${curY + h}
-                L ${curX + w * 0.43},${curY + h}
-                L ${curX + w * 0.38},${curY + h * 0.82}
-                Q ${curX + w * 0.22},${curY + h * 0.68} ${curX},${curY + h * 0.52}
-                L ${curX},${curY + r}
-                Q ${curX},${curY} ${curX + r},${curY}
+                M ${curX + 1},${curY + h * 0.12}
+                Q ${curX + 1},${curY} ${curX + w * 0.2},${curY}
+                Q ${cx - w * 0.1},${curY - 1.2} ${cx},${curY}
+                Q ${cx + w * 0.1},${curY - 1.2} ${curX + w * 0.8},${curY}
+                Q ${curX + w - 1},${curY} ${curX + w - 1},${curY + h * 0.12}
+                C ${curX + w},${curY + h * 0.35} ${curX + w - 0.5},${curY + h * 0.5} ${curX + w * 0.78},${curY + h * 0.62}
+                C ${curX + w * 0.68},${curY + h * 0.72} ${cx + w * 0.12},${curY + h * 0.78} ${cx + 1},${curY + h * 0.88}
+                Q ${cx},${curY + h * 0.96} ${cx - 1},${curY + h * 0.88}
+                C ${cx - w * 0.12},${curY + h * 0.78} ${curX + w * 0.32},${curY + h * 0.72} ${curX + w * 0.22},${curY + h * 0.62}
+                C ${curX + 0.5},${curY + h * 0.5} ${curX},${curY + h * 0.35} ${curX + 1},${curY + h * 0.12}
                 Z
               `;
 
