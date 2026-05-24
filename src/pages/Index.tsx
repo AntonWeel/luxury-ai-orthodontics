@@ -154,18 +154,28 @@ function AlignmentSliderSection() {
                 Z
               `;
 
-              // Корень — плавно сужается от шейки к острому кончику, белый
-              const neckTop = curY + crownH + 1;
-              const neckLW = w * 0.32;
-              const rootTip = curY + h * 1.48;
-              const rootPath = `
-                M ${cx - neckLW / 2},${neckTop}
-                C ${cx - neckLW / 2},${neckTop + (rootTip - neckTop) * 0.3}
-                  ${cx - 1.5},${neckTop + (rootTip - neckTop) * 0.7}
-                  ${cx},${rootTip}
-                C ${cx + 1.5},${neckTop + (rootTip - neckTop) * 0.7}
-                  ${cx + neckLW / 2},${neckTop + (rootTip - neckTop) * 0.3}
-                  ${cx + neckLW / 2},${neckTop}
+              // Три корня: левый, центральный (длиннее), правый
+              const neckTop = curY + crownH + 0.5;
+              const rw = w * 0.14; // ширина одного корня
+              const gap = w * 0.04;
+
+              // центры трёх корней по X
+              const r1cx = cx - rw - gap;
+              const r2cx = cx;
+              const r3cx = cx + rw + gap;
+
+              const tip1 = neckTop + h * 0.48;
+              const tip2 = neckTop + h * 0.62; // центральный длиннее
+              const tip3 = neckTop + h * 0.44;
+
+              const makeRoot = (rcx: number, tip: number) => `
+                M ${rcx - rw / 2},${neckTop}
+                C ${rcx - rw / 2 - 0.5},${neckTop + (tip - neckTop) * 0.35}
+                  ${rcx - 0.8},${neckTop + (tip - neckTop) * 0.72}
+                  ${rcx},${tip}
+                C ${rcx + 0.8},${neckTop + (tip - neckTop) * 0.72}
+                  ${rcx + rw / 2 + 0.5},${neckTop + (tip - neckTop) * 0.35}
+                  ${rcx + rw / 2},${neckTop}
                 Z
               `;
 
@@ -177,13 +187,16 @@ function AlignmentSliderSection() {
                   style={{ opacity: finalOpacity, transition: "opacity 0.08s" }}
                   transform={`rotate(${tilt}, ${centerX}, ${centerY})`}
                 >
-                  {/* Корень */}
-                  <path
-                    d={rootPath}
-                    fill={isGhost ? "url(#ghostGrad)" : "url(#toothGrad)"}
-                    stroke={isGhost ? "rgba(200,190,240,0.2)" : "rgba(180,170,220,0.5)"}
-                    strokeWidth="0.4"
-                  />
+                  {/* Три корня */}
+                  {[makeRoot(r1cx, tip1), makeRoot(r2cx, tip2), makeRoot(r3cx, tip3)].map((d, ri) => (
+                    <path
+                      key={ri}
+                      d={d}
+                      fill={isGhost ? "url(#ghostGrad)" : "url(#toothGrad)"}
+                      stroke={isGhost ? "rgba(200,190,240,0.2)" : "rgba(180,170,220,0.5)"}
+                      strokeWidth="0.4"
+                    />
+                  ))}
                   {/* Коронка */}
                   <path
                     d={crownPath}
