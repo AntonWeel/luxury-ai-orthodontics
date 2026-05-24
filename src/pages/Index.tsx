@@ -171,9 +171,10 @@ function AlignmentSliderSection() {
               const makeRoot = (rcx: number, tip: number) => `
                 M ${rcx - rw / 2},${neckTop}
                 C ${rcx - rw / 2 - 0.5},${neckTop + (tip - neckTop) * 0.35}
-                  ${rcx - 0.8},${neckTop + (tip - neckTop) * 0.72}
-                  ${rcx},${tip}
-                C ${rcx + 0.8},${neckTop + (tip - neckTop) * 0.72}
+                  ${rcx - rw * 0.55},${neckTop + (tip - neckTop) * 0.72}
+                  ${rcx - rw * 0.28},${tip - 0.3}
+                Q ${rcx},${tip + 1.2} ${rcx + rw * 0.28},${tip - 0.3}
+                C ${rcx + rw * 0.55},${neckTop + (tip - neckTop) * 0.72}
                   ${rcx + rw / 2 + 0.5},${neckTop + (tip - neckTop) * 0.35}
                   ${rcx + rw / 2},${neckTop}
                 Z
