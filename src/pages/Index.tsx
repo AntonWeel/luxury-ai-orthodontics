@@ -96,24 +96,39 @@ function AlignmentSliderSection() {
 
         {/* Teeth SVG */}
         <div className="relative mb-10 flex justify-center">
-          <svg viewBox="0 0 116 40" className="w-96 h-auto" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 116 52" className="w-96 h-auto" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              {/* Градиент для здорового зуба — блестящий как в рекламе */}
+              {/* Градиент коронки — белый глянец */}
               <linearGradient id="toothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="35%" stopColor="#f0eeff" />
+                <stop offset="40%" stopColor="#f4f0ff" />
                 <stop offset="100%" stopColor="#c8bfea" />
+              </linearGradient>
+              {/* Градиент корня — тёплый жёлто-бежевый */}
+              <linearGradient id="rootGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#e8d9b0" />
+                <stop offset="50%" stopColor="#d4bc8a" />
+                <stop offset="100%" stopColor="#b8985a" />
+              </linearGradient>
+              {/* Градиент корня больного зуба */}
+              <linearGradient id="rootGhostGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#e8d9b0" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#b8985a" stopOpacity="0.1" />
               </linearGradient>
               {/* Градиент для больного/прозрачного зуба */}
               <linearGradient id="ghostGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.15" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.1" />
               </linearGradient>
               {/* Блик сверху */}
               <linearGradient id="shineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
                 <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
               </linearGradient>
+              {/* Линия десны — скрывает часть корня */}
+              <clipPath id="crownClip">
+                <rect x="0" y="0" width="116" height="32" />
+              </clipPath>
             </defs>
             {teeth.map((t, i) => {
               const target = targetPositions[i];
@@ -157,23 +172,40 @@ function AlignmentSliderSection() {
 
               const isGhost = t.ghost && progress < 0.95;
 
+              // Корень: сужается от шейки зуба вниз, слегка изогнут
+              const neckY = curY + h * 0.82;
+              const neckW = w * 0.38;
+              const rootTip = curY + h * 1.55;
+              const rootPath = `
+                M ${cx - neckW / 2},${neckY}
+                C ${cx - neckW / 2 - 1},${neckY + (rootTip - neckY) * 0.4}
+                  ${cx - 1.2},${neckY + (rootTip - neckY) * 0.75}
+                  ${cx - 0.5},${rootTip}
+                Q ${cx},${rootTip + 1} ${cx + 0.5},${rootTip}
+                C ${cx + 1.2},${neckY + (rootTip - neckY) * 0.75}
+                  ${cx + neckW / 2 + 1},${neckY + (rootTip - neckY) * 0.4}
+                  ${cx + neckW / 2},${neckY}
+                Z
+              `;
+
               return (
                 <g
                   key={i}
                   style={{ opacity: finalOpacity, transition: "opacity 0.08s" }}
                   transform={`rotate(${tilt}, ${centerX}, ${centerY})`}
                 >
-                  {/* Тень под зубом */}
-                  <ellipse
-                    cx={curX + w / 2} cy={curY + h + 1.5}
-                    rx={w * 0.38} ry={1.2}
-                    fill="rgba(120,100,180,0.13)"
+                  {/* Корень (рисуется ДО коронки, чтобы быть под ней) */}
+                  <path
+                    d={rootPath}
+                    fill={isGhost ? "url(#rootGhostGrad)" : "url(#rootGrad)"}
+                    stroke={isGhost ? "rgba(184,152,90,0.2)" : "rgba(160,120,60,0.4)"}
+                    strokeWidth="0.4"
                   />
-                  {/* Тело зуба */}
+                  {/* Тело зуба (коронка) */}
                   <path
                     d={crown}
                     fill={isGhost ? "url(#ghostGrad)" : "url(#toothGrad)"}
-                    stroke={isGhost ? "rgba(167,139,250,0.4)" : "rgba(180,160,220,0.6)"}
+                    stroke={isGhost ? "rgba(167,139,250,0.4)" : "rgba(180,160,220,0.55)"}
                     strokeWidth="0.5"
                   />
                   {/* Блик */}
@@ -188,6 +220,19 @@ function AlignmentSliderSection() {
                 </g>
               );
             })}
+
+            {/* Десна — волнистая полоса, перекрывает основания корней */}
+            <path
+              d="M 0,31 Q 8,27 16,30 Q 24,33 32,29 Q 40,25 48,29 Q 56,33 64,28 Q 72,24 80,28 Q 88,32 96,28 Q 104,24 116,28 L 116,52 L 0,52 Z"
+              fill="#f9a8b8"
+              opacity="0.85"
+            />
+            {/* Светлая часть десны сверху */}
+            <path
+              d="M 0,31 Q 8,27 16,30 Q 24,33 32,29 Q 40,25 48,29 Q 56,33 64,28 Q 72,24 80,28 Q 88,32 96,28 Q 104,24 116,28 L 116,33 Q 104,30 96,33 Q 88,37 80,33 Q 72,29 64,33 Q 56,37 48,33 Q 40,29 32,33 Q 24,37 16,34 Q 8,31 0,34 Z"
+              fill="#fbc4cf"
+              opacity="0.7"
+            />
           </svg>
         </div>
 
