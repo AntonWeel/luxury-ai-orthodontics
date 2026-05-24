@@ -56,16 +56,29 @@ const stats = [
 function AlignmentSliderSection() {
   const [alignment, setAlignment] = useState(30);
 
+  // missing=true — отсутствующий зуб (появляется при выравнивании)
   const teeth = [
-    { x: 12, y: 8, w: 14, h: 20, tilt: -8 },
-    { x: 28, y: 4, w: 13, h: 22, tilt: -4 },
-    { x: 43, y: 2, w: 13, h: 23, tilt: -1 },
-    { x: 58, y: 2, w: 13, h: 23, tilt: 1 },
-    { x: 73, y: 4, w: 13, h: 22, tilt: 4 },
-    { x: 88, y: 8, w: 14, h: 20, tilt: 8 },
+    { x: 8,  y: 14, w: 13, h: 18, tilt: -22, offsetY: 6,  missing: false },
+    { x: 23, y: 4,  w: 11, h: 24, tilt: -16, offsetY: 3,  missing: false },
+    { x: 36, y: 10, w: 13, h: 20, tilt: 12,  offsetY: 5,  missing: false },
+    { x: 51, y: 0,  w: 12, h: 26, tilt: -6,  offsetY: 0,  missing: true  },
+    { x: 65, y: 6,  w: 13, h: 21, tilt: 14,  offsetY: 4,  missing: false },
+    { x: 80, y: 2,  w: 11, h: 24, tilt: -10, offsetY: 2,  missing: false },
+    { x: 93, y: 12, w: 13, h: 18, tilt: 20,  offsetY: 5,  missing: false },
   ];
 
   const progress = alignment / 100;
+
+  // Целевые позиции (ровный ряд)
+  const targetPositions = [
+    { x: 6,  y: 2 },
+    { x: 21, y: 2 },
+    { x: 36, y: 2 },
+    { x: 51, y: 2 },
+    { x: 66, y: 2 },
+    { x: 81, y: 2 },
+    { x: 96, y: 2 },
+  ];
 
   return (
     <section className="py-20 px-8 bg-white">
@@ -84,21 +97,28 @@ function AlignmentSliderSection() {
 
         {/* Teeth SVG */}
         <div className="relative mb-10 flex justify-center">
-          <svg viewBox="0 0 116 50" className="w-72 h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 116 32" className="w-80 h-auto drop-shadow-lg" xmlns="http://www.w3.org/2000/svg">
             {teeth.map((t, i) => {
-              const centerX = t.x + t.w / 2;
-              const centerY = t.y + t.h / 2;
+              const target = targetPositions[i];
+              const curX = t.x + (target.x - t.x) * progress;
+              const curY = t.y + (target.y - t.y) * progress + t.offsetY * (1 - progress);
+              const centerX = curX + t.w / 2;
+              const centerY = curY + t.h / 2;
               const tilt = t.tilt * (1 - progress);
-              const offsetY = Math.abs(t.tilt) * 0.3 * (1 - progress);
+              const opacity = t.missing ? Math.min(1, progress * 2) : 1;
+
               return (
-                <g key={i} transform={`rotate(${tilt}, ${centerX}, ${centerY}) translate(0, ${offsetY})`}
-                  style={{ transition: "transform 0.05s" }}>
+                <g
+                  key={i}
+                  style={{ transition: "transform 0.05s", opacity }}
+                  transform={`rotate(${tilt}, ${centerX}, ${centerY})`}
+                >
                   <rect
-                    x={t.x} y={t.y} width={t.w} height={t.h}
-                    rx={4}
-                    fill={`hsl(${270 - 270 * progress}, ${40 + 40 * progress}%, ${92 + 6 * progress}%)`}
-                    stroke={`hsl(${270 - 270 * progress}, 30%, 75%)`}
-                    strokeWidth="0.8"
+                    x={curX} y={curY} width={t.w} height={t.h}
+                    rx={3.5}
+                    fill={`hsl(${260 - 260 * progress}, ${35 + 45 * progress}%, ${88 + 10 * progress}%)`}
+                    stroke={`hsl(${260 - 260 * progress}, 25%, 72%)`}
+                    strokeWidth="0.7"
                   />
                 </g>
               );
