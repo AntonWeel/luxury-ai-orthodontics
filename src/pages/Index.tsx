@@ -53,6 +53,63 @@ const stats = [
   { icon: "Clock", value: "30 Sec", label: "Instant Results" },
 ];
 
+function HowItWorksSection() {
+  const [active, setActive] = useState(0);
+
+  const steps = [
+    { num: "1.", icon: "Upload", title: "Upload Photo", desc: "Upload a clear selfie or smile photo" },
+    { num: "2.", icon: "Cpu", title: "AI Analysis", desc: "Our AI scans and predicts your perfect smile" },
+    { num: "3.", icon: "UserCheck", title: "Get Expert Plan", desc: "Receive personalized plan from our experts" },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % steps.length);
+    }, 1800);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <section id="how" className="bg-gray-900 py-16 px-8">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-center text-2xl font-bold text-white mb-10">
+          How <span className="text-gradient">SmileAI</span> Works?
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6 relative">
+          {steps.map((step, i) => (
+            <div key={i} className="flex flex-col items-center text-center relative">
+              {i < 2 && (
+                <div className="hidden md:block absolute top-8 left-[calc(50%+40px)] right-0 h-px border-t-2 border-dashed border-white/20" />
+              )}
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-all duration-500"
+                style={{
+                  background: active === i ? "rgba(147,51,234,0.9)" : "rgba(147,51,234,0.15)",
+                  border: active === i ? "2px solid rgba(167,139,250,0.9)" : "2px solid rgba(147,51,234,0.3)",
+                  boxShadow: active === i ? "0 0 24px rgba(147,51,234,0.6), 0 0 6px rgba(167,139,250,0.4)" : "none",
+                  transform: active === i ? "scale(1.15)" : "scale(1)",
+                }}
+              >
+                <Icon
+                  name={step.icon}
+                  size={24}
+                  fallback="Star"
+                  className="transition-colors duration-500"
+                  style={{ color: active === i ? "#ffffff" : "rgba(167,139,250,0.7)" } as React.CSSProperties}
+                />
+              </div>
+              <h3 className={`font-bold mb-1 transition-colors duration-500 ${active === i ? "text-white" : "text-white/60"}`}>
+                {step.num} {step.title}
+              </h3>
+              <p className="text-white/50 text-sm">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AlignmentSliderSection() {
   const [alignment, setAlignment] = useState(30);
 
@@ -492,31 +549,7 @@ export default function Index() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how" className="bg-gray-900 py-16 px-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-center text-2xl font-bold text-white mb-10">
-            How <span className="text-gradient">SmileAI</span> Works?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6 relative">
-            {[
-              { num: "1.", icon: "Upload", title: "Upload Photo", desc: "Upload a clear selfie or smile photo" },
-              { num: "2.", icon: "Cpu", title: "AI Analysis", desc: "Our AI scans and predicts your perfect smile" },
-              { num: "3.", icon: "UserCheck", title: "Get Expert Plan", desc: "Receive personalized plan from our experts" },
-            ].map((step, i) => (
-              <div key={i} className="flex flex-col items-center text-center relative">
-                {i < 2 && (
-                  <div className="hidden md:block absolute top-8 left-[calc(50%+40px)] right-0 h-px border-t-2 border-dashed border-white/20" />
-                )}
-                <div className="w-16 h-16 rounded-full bg-purple-600/20 border border-purple-500/40 flex items-center justify-center mb-4">
-                  <Icon name={step.icon} size={24} className="text-purple-400" fallback="Star" />
-                </div>
-                <h3 className="text-white font-bold mb-1">{step.num} {step.title}</h3>
-                <p className="text-white/50 text-sm">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HowItWorksSection />
 
       {/* ALIGNMENT SLIDER SECTION */}
       <AlignmentSliderSection />
