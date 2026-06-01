@@ -582,7 +582,7 @@ export default function Index() {
 
               <button
                 onClick={() => window.open("https://forms.gle/FxaYuWWicXGSo4iw6", "_blank")}
-                className="btn-purple px-7 py-3.5 text-sm flex items-center gap-2 mb-6"
+                className="btn-purple btn-shine px-7 py-3.5 text-sm flex items-center gap-2 mb-6"
               >
                 Start Free Preview
                 <Icon name="ArrowRight" size={16} />
