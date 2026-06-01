@@ -147,6 +147,49 @@
   }
 }
 
+@keyframes smile-shine {
+  0% {
+    left: -80%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    left: 130%;
+    opacity: 0.7;
+  }
+  100% {
+    left: 130%;
+    opacity: 0;
+  }
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 40%,
+    rgba(255, 255, 255, 0.72) 50%,
+    rgba(255, 255, 255, 0.18) 60%,
+    transparent 100%
+  );
+  animation: smile-shine 2.8s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
 .animate-fade-up {
   animation: fadeUp 0.7s ease-out forwards;
 }

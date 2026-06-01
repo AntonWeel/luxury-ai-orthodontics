@@ -461,7 +461,7 @@ export default function Index() {
 
             <button
               onClick={() => scrollTo("preview")}
-              className="btn-purple animate-pulse-glow px-8 py-4 text-base flex items-center gap-3 mb-8"
+              className="btn-purple animate-pulse-glow btn-shine px-8 py-4 text-base flex items-center gap-3 mb-8"
             >
               Start Free Preview
               <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
