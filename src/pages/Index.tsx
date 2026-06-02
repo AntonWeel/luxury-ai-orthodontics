@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import Icon from "@/components/ui/icon";
+import { translations, type Lang } from "@/i18n";
 
 const BEFORE_AFTER_IMG = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/9553bf85-ffd0-4d15-ba67-ea474e306a50.jpg";
 const DOCTOR_M = "https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/files/f5200402-c835-4fbf-8322-94ab6108caca.jpg";
@@ -53,14 +54,9 @@ const stats = [
   { icon: "Clock", value: "30 Sec", label: "Instant Results" },
 ];
 
-function HowItWorksSection() {
+function HowItWorksSection({ t }: { t: typeof translations["en"] }) {
   const [active, setActive] = useState(0);
-
-  const steps = [
-    { num: "1.", icon: "Upload", title: "Upload Photo", desc: "Upload a clear selfie or smile photo" },
-    { num: "2.", icon: "Cpu", title: "AI Analysis", desc: "Our AI scans and predicts your perfect smile" },
-    { num: "3.", icon: "UserCheck", title: "Get Expert Plan", desc: "Receive personalized plan from our experts" },
-  ];
+  const steps = t.how.steps;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -73,7 +69,7 @@ function HowItWorksSection() {
     <section id="how" className="bg-gray-900 py-16 px-8">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-center text-2xl font-bold text-white mb-10">
-          How <span className="text-gradient">SmileAI</span> Works?
+          {t.how.title} <span className="text-gradient">{t.how.brand}</span> {t.how.titleEnd}
         </h2>
         <div className="grid md:grid-cols-3 gap-6 relative">
           {steps.map((step, i) => (
@@ -110,7 +106,7 @@ function HowItWorksSection() {
   );
 }
 
-function AlignmentSliderSection() {
+function AlignmentSliderSection({ t }: { t: typeof translations["en"] }) {
   const [alignment, setAlignment] = useState(30);
 
   // missing=true — отсутствующий зуб (появляется при выравнивании), ghost=true — прозрачный больной зуб
@@ -141,14 +137,14 @@ function AlignmentSliderSection() {
       <div className="max-w-3xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 text-purple-600 text-xs font-bold uppercase tracking-widest mb-4">
           <span className="w-6 h-px bg-purple-400 inline-block" />
-          Alignment Progress
+          {t.slider.label}
           <span className="w-6 h-px bg-purple-400 inline-block" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900 mb-3">
-          See Your <span className="text-gradient">Smile Transform</span>
+          <span className="text-gradient">{t.slider.title}</span>
         </h2>
         <p className="text-gray-500 mb-12 text-sm">
-          Move the slider to visualise how your teeth align over time
+          {t.slider.subtitle}
         </p>
 
         {/* Teeth SVG */}
@@ -285,7 +281,7 @@ function AlignmentSliderSection() {
         {/* Percentage badge */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="text-5xl font-bold text-gray-900">{alignment}%</span>
-          <span className="text-left text-sm text-gray-500 leading-tight">alignment<br />achieved</span>
+          <span className="text-left text-sm text-gray-500 leading-tight">{t.slider.achieved}</span>
         </div>
 
         {/* Slider */}
@@ -312,6 +308,9 @@ function AlignmentSliderSection() {
 }
 
 export default function Index() {
+  const [lang, setLang] = useState<Lang>("en");
+  const t = translations[lang];
+
   const [sliderValue, setSliderValue] = useState(50);
   const sliderRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -324,11 +323,11 @@ export default function Index() {
   const [activeSection, setActiveSection] = useState("home");
 
   const navItems = [
-    { label: "Home", id: "home" },
-    { label: "Services", id: "preview" },
-    { label: "How it works", id: "how" },
-    { label: "About us", id: "reviews" },
-    { label: "For Doctors", id: "doctors" },
+    { label: t.nav.home, id: "home" },
+    { label: t.nav.services, id: "preview" },
+    { label: t.nav.how, id: "how" },
+    { label: t.nav.about, id: "reviews" },
+    { label: t.nav.doctors, id: "doctors" },
   ];
 
   useEffect(() => {
@@ -426,13 +425,29 @@ export default function Index() {
             </button>
           ))}
         </div>
-        <button
-          onClick={() => scrollTo("preview")}
-          className="btn-purple px-5 py-2.5 text-sm flex items-center gap-2"
-        >
-          Get Started
-          <Icon name="ArrowRight" size={14} />
-        </button>
+        <div className="flex items-center gap-2">
+          {(["en", "de"] as Lang[]).map((l) => (
+            <button
+              key={l}
+              onClick={() => setLang(l)}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+                lang === l
+                  ? "border-purple-300 bg-purple-50 text-purple-700"
+                  : "border-transparent text-gray-400 hover:text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              <span className="text-base leading-none">{l === "en" ? "🇬🇧" : "🇩🇪"}</span>
+              <span className="uppercase">{l}</span>
+            </button>
+          ))}
+          <button
+            onClick={() => scrollTo("preview")}
+            className="btn-purple px-5 py-2.5 text-sm flex items-center gap-2 ml-1"
+          >
+            {t.nav.getStarted}
+            <Icon name="ArrowRight" size={14} />
+          </button>
+        </div>
       </nav>
 
       {/* HERO */}
@@ -447,23 +462,23 @@ export default function Index() {
           <div className="animate-fade-up">
             <div className="inline-flex items-center gap-2 bg-purple-100 border border-purple-200 rounded-full px-4 py-1.5 mb-6">
               <span className="text-yellow-500 text-xs">🤖</span>
-              <span className="text-purple-700 text-xs font-semibold tracking-widest uppercase">AI Powered Orthodontics</span>
+              <span className="text-purple-700 text-xs font-semibold tracking-widest uppercase">{t.hero.badge}</span>
             </div>
 
             <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-gray-900">
-              See Your Future<br />
-              <span className="text-gradient">Smile</span> with AI
+              {t.hero.title1}<br />
+              <span className="text-gradient">{t.hero.title2}</span> {t.hero.title3}
             </h1>
 
             <p className="text-gray-500 text-lg mb-8 max-w-md leading-relaxed">
-              Upload your photo and get an AI-powered preview of your perfect smile in less than 30 seconds.
+              {t.hero.subtitle}
             </p>
 
             <button
               onClick={() => scrollTo("preview")}
               className="btn-purple animate-pulse-glow btn-shine px-8 py-4 text-base flex items-center gap-3 mb-8"
             >
-              Start Free Preview
+              {t.hero.cta}
               <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
                 <Icon name="ArrowRight" size={16} />
               </div>
@@ -472,15 +487,15 @@ export default function Index() {
             <div className="flex items-center gap-6 text-gray-400 text-sm">
               <div className="flex items-center gap-1.5">
                 <Icon name="CreditCard" size={14} />
-                <span>No credit card</span>
+                <span>{t.hero.noCard}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Icon name="Sparkles" size={14} />
-                <span>Free AI analysis</span>
+                <span>{t.hero.freeAI}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Icon name="Zap" size={14} />
-                <span>Instant results</span>
+                <span>{t.hero.instant}</span>
               </div>
             </div>
           </div>
@@ -549,10 +564,10 @@ export default function Index() {
       </section>
 
       {/* HOW IT WORKS */}
-      <HowItWorksSection />
+      <HowItWorksSection t={t} />
 
       {/* ALIGNMENT SLIDER SECTION */}
-      <AlignmentSliderSection />
+      <AlignmentSliderSection t={t} />
 
       {/* AI PREVIEW SECTION */}
       <section id="preview" className="py-20 px-8 bg-white">
@@ -562,15 +577,15 @@ export default function Index() {
             {/* Left text */}
             <div>
               <div className="inline-flex items-center gap-2 text-purple-600 text-xs font-bold uppercase tracking-widest mb-4">
-                <span className="text-purple-500">✦</span> AI Smile Preview
+                <span className="text-purple-500">✦</span> {t.preview.badge}
               </div>
               <h2 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                Your New <span className="text-gradient">Smile</span><br />is Closer Than You Think!
+                {t.preview.title}
               </h2>
-              <p className="text-gray-500 mb-6">Advanced AI technology to show your future smile.</p>
+              <p className="text-gray-500 mb-6">{t.preview.subtitle}</p>
 
               <div className="space-y-3 mb-8">
-                {["Realistic AI preview", "Personalized for you", "Instant & secure"].map((f) => (
+                {t.preview.features.map((f) => (
                   <div key={f} className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
                       <Icon name="Check" size={12} className="text-purple-600" />
@@ -584,7 +599,7 @@ export default function Index() {
                 onClick={() => window.open("https://forms.gle/FxaYuWWicXGSo4iw6", "_blank")}
                 className="btn-purple btn-shine px-7 py-3.5 text-sm flex items-center gap-2 mb-6"
               >
-                Start Free Preview
+                {t.preview.cta}
                 <Icon name="ArrowRight" size={16} />
               </button>
 
@@ -594,7 +609,7 @@ export default function Index() {
                     <img key={i} src={img} alt="" className="w-8 h-8 rounded-full border-2 border-white object-cover" />
                   ))}
                 </div>
-                <span className="text-sm text-gray-500 font-medium">15,000+ smiles transformed</span>
+                <span className="text-sm text-gray-500 font-medium">{t.preview.social}</span>
               </div>
             </div>
 
@@ -608,17 +623,17 @@ export default function Index() {
                     <Icon name="ClipboardList" size={28} className="text-white" />
                   </div>
                   <div className="text-center px-6">
-                    <p className="font-bold text-gray-900 mb-1">Get Your Free AI Smile Preview</p>
-                    <p className="text-sm text-gray-500">Fill out a short form and our expert will prepare your personalized smile plan</p>
+                    <p className="font-bold text-gray-900 mb-1">{t.preview.formTitle}</p>
+                    <p className="text-sm text-gray-500">{t.preview.formDesc}</p>
                   </div>
                   <div className="btn-purple px-6 py-2.5 text-sm flex items-center gap-2">
-                    Open Form
+                    {t.preview.openForm}
                     <Icon name="ExternalLink" size={14} />
                   </div>
                   <div className="flex gap-4 text-xs text-gray-400">
-                    <span className="flex items-center gap-1"><Icon name="Lock" size={11} /> Private</span>
-                    <span className="flex items-center gap-1"><Icon name="Zap" size={11} /> 30 sec</span>
-                    <span className="flex items-center gap-1"><Icon name="Sparkles" size={11} /> AI-powered</span>
+                    <span className="flex items-center gap-1"><Icon name="Lock" size={11} /> {t.preview.private}</span>
+                    <span className="flex items-center gap-1"><Icon name="Zap" size={11} /> {t.preview.secShort}</span>
+                    <span className="flex items-center gap-1"><Icon name="Sparkles" size={11} /> {t.preview.aiPowered}</span>
                   </div>
               </div>
 
@@ -697,10 +712,10 @@ export default function Index() {
       {/* STATS */}
       <section className="py-12 px-8 border-y border-gray-100 bg-white">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((s) => (
-            <div key={s.label} className="flex items-center gap-4">
+          {t.stats.map((s, i) => (
+            <div key={i} className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center flex-shrink-0">
-                <Icon name={s.icon} size={22} className="text-purple-500" fallback="Star" />
+                <Icon name={stats[i].icon} size={22} className="text-purple-500" fallback="Star" />
               </div>
               <div>
                 <div className="text-xl font-bold text-gray-900">{s.value}</div>
@@ -716,11 +731,11 @@ export default function Index() {
         <div className="max-w-5xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900">Meet Our Expert Doctors</h2>
-              <p className="text-gray-500 mt-1">Certified orthodontists with years of experience</p>
+              <h2 className="text-3xl font-bold text-gray-900">{t.doctors.title}</h2>
+              <p className="text-gray-500 mt-1">{t.doctors.subtitle}</p>
             </div>
             <button className="border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">
-              View all doctors
+              {t.doctors.viewAll}
             </button>
           </div>
 
@@ -737,9 +752,9 @@ export default function Index() {
                     <div className="flex items-center gap-1">
                       <span className="text-yellow-400">★</span>
                       <span className="font-semibold text-gray-700">{doc.rating}</span>
-                      <span>({doc.reviews})</span>
+                      <span>({doc.reviews} {t.doctors.reviews})</span>
                     </div>
-                    <span className="text-purple-600 font-medium">{doc.exp}</span>
+                    <span className="text-purple-600 font-medium">{doc.exp.replace("Years Exp.", t.doctors.exp)}</span>
                   </div>
                 </div>
               </div>
@@ -751,22 +766,22 @@ export default function Index() {
       {/* REVIEWS */}
       <section id="reviews" className="py-20 px-8 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">What Our Patients Say</h2>
-          <p className="text-gray-500 mb-10">Real people, real results, real smiles</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">{t.reviews.title}</h2>
+          <p className="text-gray-500 mb-10">{t.reviews.subtitle}</p>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {reviews.map((r) => (
-              <div key={r.name} className="card-hover bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            {t.reviews.items.map((r, i) => (
+              <div key={i} className="card-hover bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <div className="flex items-center gap-3 mb-3">
-                  <img src={r.avatar} alt={r.name} className="w-10 h-10 rounded-full object-cover" />
+                  <img src={reviews[i].avatar} alt={r.name} className="w-10 h-10 rounded-full object-cover" />
                   <div>
                     <div className="font-bold text-gray-900 text-sm">{r.name}</div>
                     <div className="text-gray-500 text-xs">{r.location}</div>
                   </div>
                 </div>
                 <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: r.rating }).map((_, i) => (
-                    <span key={i} className="text-yellow-400 text-sm">★</span>
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <span key={j} className="text-yellow-400 text-sm">★</span>
                   ))}
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed">{r.text}</p>
@@ -785,15 +800,15 @@ export default function Index() {
                 💬
               </div>
               <div>
-                <h3 className="text-white text-xl font-bold">Ready to See Your Future Smile?</h3>
-                <p className="text-white/80 text-sm">Upload your photo now and take the first step towards your perfect smile.</p>
+                <h3 className="text-white text-xl font-bold">{t.cta.title}</h3>
+                <p className="text-white/80 text-sm">{t.cta.subtitle}</p>
               </div>
             </div>
             <button
               onClick={() => scrollTo("preview")}
               className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full hover:bg-purple-50 transition-colors whitespace-nowrap flex items-center gap-2"
             >
-              Start Free Preview
+              {t.cta.btn}
               <Icon name="ArrowRight" size={16} />
             </button>
           </div>
@@ -811,7 +826,7 @@ export default function Index() {
                 <span className="text-purple-500 text-lg">✦</span>
               </div>
               <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                AI-powered orthodontic analysis for your perfect smile. Trusted by thousands worldwide.
+                {t.footer.tagline}
               </p>
               <div className="flex gap-3">
                 {["Instagram", "Facebook", "Youtube", "Twitter"].map((s) => (
@@ -823,7 +838,7 @@ export default function Index() {
             </div>
 
             {/* Links */}
-            {Object.entries(footerLinks).map(([title, links]) => (
+            {Object.entries(t.footer.links).map(([title, links]) => (
               <div key={title}>
                 <h4 className="font-bold text-gray-900 mb-4">{title}</h4>
                 <ul className="space-y-2">
@@ -859,7 +874,7 @@ export default function Index() {
           </div>
 
           <div className="border-t border-gray-100 pt-6 text-center">
-            <p className="text-gray-400 text-sm">© 2025 SmileAI. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">{t.footer.copyright}</p>
           </div>
         </div>
       </footer>
