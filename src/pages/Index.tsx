@@ -806,7 +806,7 @@ export default function Index() {
             </div>
             <button
               onClick={() => scrollTo("preview")}
-              className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full hover:bg-purple-50 transition-colors whitespace-nowrap flex items-center gap-2"
+              className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full hover:bg-purple-50 transition-colors whitespace-nowrap flex items-center gap-2 btn-neon-green"
             >
               {t.cta.btn}
               <Icon name="ArrowRight" size={16} />
