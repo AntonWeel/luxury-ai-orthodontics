@@ -402,7 +402,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden" dir={lang === "ar" ? "rtl" : "ltr"}>
 
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-white border-b border-gray-100 shadow-sm">
@@ -426,7 +426,7 @@ export default function Index() {
           ))}
         </div>
         <div className="flex items-center gap-2">
-          {(["en", "de"] as Lang[]).map((l) => (
+          {(["en", "de", "ar"] as Lang[]).map((l) => (
             <button
               key={l}
               onClick={() => setLang(l)}
@@ -436,7 +436,7 @@ export default function Index() {
                   : "border-transparent text-gray-400 hover:text-gray-600 hover:bg-gray-50"
               }`}
             >
-              <span className="text-base leading-none">{l === "en" ? "🇬🇧" : "🇩🇪"}</span>
+              <span className="text-base leading-none">{l === "en" ? "🇬🇧" : l === "de" ? "🇩🇪" : "🇦🇪"}</span>
               <span className="uppercase">{l}</span>
             </button>
           ))}
