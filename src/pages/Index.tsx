@@ -66,7 +66,7 @@ function HowItWorksSection({ t }: { t: typeof translations["en"] }) {
   }, []);
 
   return (
-    <section id="how" className="bg-gray-900 py-16 px-8">
+    <section id="how" className="relative z-10 bg-gray-900/85 backdrop-blur-sm py-16 px-8">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-center text-2xl font-bold text-white mb-10">
           {t.how.title} <span className="text-gradient">{t.how.brand}</span> {t.how.titleEnd}
@@ -133,7 +133,7 @@ function AlignmentSliderSection({ t }: { t: typeof translations["en"] }) {
   ];
 
   return (
-    <section className="py-20 px-8 bg-white">
+    <section className="relative z-10 py-20 px-8 bg-white/85 backdrop-blur-sm">
       <div className="max-w-3xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 text-purple-600 text-xs font-bold uppercase tracking-widest mb-4">
           <span className="w-6 h-px bg-purple-400 inline-block" />
@@ -404,8 +404,15 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden" dir={lang === "ar" ? "rtl" : "ltr"}>
 
+      {/* Fixed background photo, visible through all sections while scrolling */}
+      <div
+        className="fixed inset-0 bg-cover bg-center opacity-40 pointer-events-none z-0"
+        style={{ backgroundImage: "url(https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/bucket/1b6bb181-3175-4ee3-8050-632030c1222f.jpeg)" }}
+      />
+      <div className="fixed inset-0 bg-white/50 pointer-events-none z-0" />
+
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-white border-b border-gray-100 shadow-sm">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-white/90 backdrop-blur-sm border-b border-gray-100 shadow-sm">
         <div className="flex items-center gap-1">
           <span className="text-gray-900 font-bold text-xl tracking-tight">SmileAI</span>
           <span className="text-purple-500 text-lg">✦</span>
@@ -451,13 +458,7 @@ export default function Index() {
       </nav>
 
       {/* HERO */}
-      <section id="home" className="min-h-screen flex items-center pt-16 px-8 relative bg-gradient-to-br from-purple-50 via-white to-indigo-50 overflow-hidden">
-        {/* Background photo */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-25 pointer-events-none"
-          style={{ backgroundImage: "url(https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/bucket/1b6bb181-3175-4ee3-8050-632030c1222f.jpeg)" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50/90 via-white/70 to-indigo-50/90 pointer-events-none" />
+      <section id="home" className="min-h-screen flex items-center pt-16 px-8 relative overflow-hidden">
         {/* Decorative blobs */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-100/60 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-indigo-100/50 blur-3xl pointer-events-none" />
@@ -570,7 +571,7 @@ export default function Index() {
       </section>
 
       {/* TRUST BAR */}
-      <section className="py-4 px-8 bg-gray-900 border-y border-white/10 overflow-hidden">
+      <section className="relative z-10 py-4 px-8 bg-gray-900/85 backdrop-blur-sm border-y border-white/10 overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
           {t.trustBar.map((item, i) => (
             <div key={i} className="flex items-center gap-2 text-white/80 text-sm font-medium whitespace-nowrap">
@@ -588,7 +589,7 @@ export default function Index() {
       <AlignmentSliderSection t={t} />
 
       {/* AI PREVIEW SECTION */}
-      <section id="preview" className="py-20 px-8 bg-white">
+      <section id="preview" className="relative z-10 py-20 px-8 bg-white/85 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
 
@@ -728,7 +729,7 @@ export default function Index() {
       </section>
 
       {/* STATS */}
-      <section className="py-12 px-8 border-y border-gray-100 bg-white">
+      <section className="relative z-10 py-12 px-8 border-y border-gray-100 bg-white/85 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {t.stats.map((s, i) => (
             <div key={i} className="flex items-center gap-4">
@@ -745,7 +746,7 @@ export default function Index() {
       </section>
 
       {/* DOCTORS */}
-      <section id="doctors" className="py-20 px-8 bg-white">
+      <section id="doctors" className="relative z-10 py-20 px-8 bg-white/85 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
@@ -782,7 +783,7 @@ export default function Index() {
       </section>
 
       {/* REVIEWS */}
-      <section id="reviews" className="py-20 px-8 bg-gray-50">
+      <section id="reviews" className="relative z-10 py-20 px-8 bg-gray-50/85 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">{t.reviews.title}</h2>
           <p className="text-gray-500 mb-10">{t.reviews.subtitle}</p>
@@ -810,7 +811,7 @@ export default function Index() {
       </section>
 
       {/* CTA BANNER */}
-      <section className="py-12 px-8">
+      <section className="relative z-10 py-12 px-8">
         <div className="max-w-5xl mx-auto">
           <div className="rounded-3xl bg-gradient-to-r from-purple-700 to-purple-500 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
@@ -834,7 +835,7 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-white border-t border-gray-100 pt-16 pb-8 px-8">
+      <footer className="relative z-10 bg-white/90 backdrop-blur-sm border-t border-gray-100 pt-16 pb-8 px-8">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-5 gap-8 mb-12">
             {/* Brand */}
