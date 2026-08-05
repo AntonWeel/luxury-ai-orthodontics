@@ -452,6 +452,12 @@ export default function Index() {
 
       {/* HERO */}
       <section id="home" className="min-h-screen flex items-center pt-16 px-8 relative bg-gradient-to-br from-purple-50 via-white to-indigo-50 overflow-hidden">
+        {/* Background photo */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-[0.07] pointer-events-none"
+          style={{ backgroundImage: "url(https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/bucket/1b6bb181-3175-4ee3-8050-632030c1222f.jpeg)" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white/90 to-indigo-50 pointer-events-none" />
         {/* Decorative blobs */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-purple-100/60 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-indigo-100/50 blur-3xl pointer-events-none" />
