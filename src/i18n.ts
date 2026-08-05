@@ -27,6 +27,13 @@ export const translations = {
       { value: "100%", label: "Secure & Private" },
       { value: "30 Sec", label: "Instant Results" },
     ],
+    trustBar: [
+      { icon: "🏥", text: "Trusted Dental Network" },
+      { icon: "⭐", text: "4.9/5 Patient Satisfaction" },
+      { icon: "🔒", text: "Secure & Private" },
+      { icon: "🤖", text: "AI-Powered Assessment" },
+      { icon: "👨‍⚕️", text: "Expert Consultation Available" },
+    ],
     how: {
       title: "How",
       brand: "SmileAI",
@@ -114,6 +121,13 @@ export const translations = {
       { value: "100%", label: "Sicher & Privat" },
       { value: "30 Sek", label: "Sofortergebnis" },
     ],
+    trustBar: [
+      { icon: "🏥", text: "Vertrauenswürdiges Zahnärztenetzwerk" },
+      { icon: "⭐", text: "4,9/5 Patientenzufriedenheit" },
+      { icon: "🔒", text: "Sicher & Privat" },
+      { icon: "🤖", text: "KI-gestützte Bewertung" },
+      { icon: "👨‍⚕️", text: "Expertenberatung verfügbar" },
+    ],
     how: {
       title: "Wie funktioniert",
       brand: "SmileAI",
@@ -200,6 +214,13 @@ export const translations = {
       { value: "4.9/5", label: "تقييم المستخدمين" },
       { value: "100%", label: "آمن وخاص" },
       { value: "30 ث", label: "نتائج فورية" },
+    ],
+    trustBar: [
+      { icon: "🏥", text: "شبكة طب أسنان موثوقة" },
+      { icon: "⭐", text: "رضا المرضى 4.9/5" },
+      { icon: "🔒", text: "آمن وخاص" },
+      { icon: "🤖", text: "تقييم مدعوم بالذكاء الاصطناعي" },
+      { icon: "👨‍⚕️", text: "استشارة الخبراء متاحة" },
     ],
     how: {
       title: "كيف يعمل",

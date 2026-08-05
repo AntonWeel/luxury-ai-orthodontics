@@ -563,6 +563,18 @@ export default function Index() {
         </div>
       </section>
 
+      {/* TRUST BAR */}
+      <section className="py-4 px-8 bg-gray-900 border-y border-white/10 overflow-hidden">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
+          {t.trustBar.map((item, i) => (
+            <div key={i} className="flex items-center gap-2 text-white/80 text-sm font-medium whitespace-nowrap">
+              <span className="text-base">{item.icon}</span>
+              <span>{item.text}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <HowItWorksSection t={t} />
 
