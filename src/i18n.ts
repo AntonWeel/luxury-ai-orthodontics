@@ -12,9 +12,9 @@ export const translations = {
     },
     hero: {
       badge: "AI Powered Orthodontics",
-      title1: "See Your Future",
+      title1: "Your Perfect",
       title2: "Smile",
-      title3: "with AI",
+      title3: "Designed",
       subtitle: "Upload your photo and get an AI-powered preview of your perfect smile in less than 30 seconds.",
       cta: "Start Free Preview",
       noCard: "No credit card",
