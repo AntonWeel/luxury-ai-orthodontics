@@ -826,27 +826,27 @@ export default function Index() {
         </div>
       </section>
 
-      {/* CTA BANNER */}
-      <section className="relative z-10 py-12 px-8">
-        <div className="max-w-5xl mx-auto">
-          <div className="rounded-3xl bg-gradient-to-r from-purple-700 to-purple-500 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-green-400 flex items-center justify-center text-2xl flex-shrink-0">
-                💬
-              </div>
-              <div>
-                <h3 className="text-white text-xl font-bold">{t.cta.title}</h3>
-                <p className="text-white/80 text-sm">{t.cta.subtitle}</p>
-              </div>
-            </div>
-            <button
-              onClick={() => scrollTo("preview")}
-              className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full hover:bg-purple-50 transition-colors whitespace-nowrap flex items-center gap-2 btn-neon-green"
-            >
-              {t.cta.btn}
-              <Icon name="ArrowRight" size={16} />
-            </button>
+      {/* CTA BANNER — final section with visible background photo */}
+      <section className="relative z-10 py-28 px-8 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(https://cdn.poehali.dev/projects/060ab8bb-33c9-47ff-9e89-6eeb19f67845/bucket/1b6bb181-3175-4ee3-8050-632030c1222f.jpeg)" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/85 via-purple-800/75 to-indigo-900/85" />
+
+        <div className="max-w-3xl mx-auto relative z-10 text-center flex flex-col items-center">
+          <div className="w-14 h-14 rounded-full bg-green-400 flex items-center justify-center text-3xl mb-6 shadow-lg">
+            💬
           </div>
+          <h2 className="text-white text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
+          <p className="text-white/85 text-lg mb-8 max-w-xl">{t.cta.subtitle}</p>
+          <button
+            onClick={() => scrollTo("preview")}
+            className="bg-white text-purple-700 font-bold px-8 py-4 rounded-full hover:bg-purple-50 transition-colors whitespace-nowrap flex items-center gap-2 btn-neon-green text-base"
+          >
+            {t.cta.btn}
+            <Icon name="ArrowRight" size={16} />
+          </button>
         </div>
       </section>
 
