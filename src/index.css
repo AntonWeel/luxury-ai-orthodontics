@@ -141,10 +141,10 @@
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 4px 24px hsla(258, 84%, 60%, 0.5);
+    box-shadow: 0 4px 20px hsla(258, 70%, 70%, 0.35);
   }
   50% {
-    box-shadow: 0 4px 48px hsla(258, 84%, 60%, 0.9);
+    box-shadow: 0 4px 36px hsla(258, 70%, 70%, 0.6);
   }
 }
 
@@ -286,7 +286,7 @@
 
 /* Purple CTA button */
 .btn-purple {
-  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  background: linear-gradient(135deg, #9575e0 0%, #a78bfa 100%);
   color: white;
   border-radius: 9999px;
   font-weight: 600;
