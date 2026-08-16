@@ -501,8 +501,8 @@ export default function Index() {
               onClick={() => scrollTo("preview")}
               className="btn-purple btn-shine px-8 py-4 text-base flex items-center gap-3 mb-8"
             >
-              {t.hero.cta}
-              <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
+              <span className="relative z-10">{t.hero.cta}</span>
+              <div className="relative z-10 w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
                 <Icon name="ArrowRight" size={16} />
               </div>
             </button>
@@ -634,8 +634,8 @@ export default function Index() {
                 onClick={() => window.open("https://forms.gle/FxaYuWWicXGSo4iw6", "_blank")}
                 className="btn-purple btn-shine px-7 py-3.5 text-sm flex items-center gap-2 mb-6"
               >
-                {t.preview.cta}
-                <Icon name="ArrowRight" size={16} />
+                <span className="relative z-10">{t.preview.cta}</span>
+                <Icon name="ArrowRight" size={16} className="relative z-10" />
               </button>
 
               <div className="flex items-center gap-3">
