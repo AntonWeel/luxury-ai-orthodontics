@@ -292,7 +292,9 @@
   font-weight: 600;
   transition:
     opacity 0.2s,
-    transform 0.2s;
+    transform 0.2s,
+    box-shadow 0.2s;
+  animation: pulse-glow 2.5s ease-in-out infinite;
 }
 .btn-purple:hover {
   opacity: 0.92;
